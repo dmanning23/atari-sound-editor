@@ -1,0 +1,75 @@
+
+    processor 6502
+    include "vcs.h"
+    include "macro.h"
+    include "xmacro.h"
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;This program shows the workflow for adding atari-sound-editor effects to an atari game.
+;This game will play a gnarly sound effect from the aliens2600 project when the player preses a button
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Variables segment
+
+    seg.u Variables
+    org $80
+
+;STEP 1: Export the -sfx.asm file from the atari-sound-editor tool and place it in this folder
+
+;STEP 2: Add the indexes for sound effect driver
+SFX_LEFT:       ds 1
+SFX_RIGHT:      ds 1
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Code segment
+
+    seg Code
+    org $f000
+
+Start
+    CLEAN_START
+
+NextFrame
+    lsr SWCHB	; test Game Reset switch
+    bcc Start	; reset?
+    ; 1 + 3 lines of VSYNC
+    VERTICAL_SYNC
+    ; 37 lines of underscan
+    TIMER_SETUP 37
+
+    ;fire the sound effect if the button is down
+    bit INPT4
+    bmi SkipButton
+
+    ;STEP 3: Fire sound effects by loading into the y register and jumping to SFX_TRIGGER
+    ldy sfxALIENDEATH
+    jsr SFX_TRIGGER
+
+SkipButton
+
+    TIMER_WAIT
+    ; 192 lines of frame
+	TIMER_SETUP 192
+    TIMER_WAIT
+    ; 29 lines of overscan
+    TIMER_SETUP 29
+
+    ;STEP 4: Update the sound effect engine during either underscan or overscan
+    jsr SFX_UPDATE
+
+    TIMER_WAIT
+    ; total = 262 lines, go to next frame
+    jmp NextFrame
+
+    ;STEP 5: Include the -sfx.asm file that is exported from the atari-sound-tool web app
+    include "aliens2600-sfx.asm"
+
+    ;STEP 6: profit?
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Epilogue
+
+    org $fffc
+        .word Start	; reset vector
+        .word Start	; BRK vector
