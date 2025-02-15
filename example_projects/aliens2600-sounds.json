@@ -1,0 +1,635 @@
+{
+    "gameName": "Aliens2600",
+    "soundEffects": [
+        {
+            "id": 1738964730643,
+            "name": "Shoot",
+            "tones": [
+                {
+                    "id": 1738964735761,
+                    "control": 8,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738964736210,
+                    "control": 8,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738964736689,
+                    "control": 8,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738964737265,
+                    "control": 8,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738964742058,
+                    "control": 8,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738964742609,
+                    "control": 8,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738964779759,
+                    "control": 8,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738964780512,
+                    "control": 8,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738964781513,
+                    "control": 8,
+                    "volume": 15,
+                    "frequency": 6
+                },
+                {
+                    "id": 1738965067121,
+                    "control": 8,
+                    "volume": 15,
+                    "frequency": 8
+                },
+                {
+                    "id": 1738965068288,
+                    "control": 8,
+                    "volume": 14,
+                    "frequency": 10
+                },
+                {
+                    "id": 1738965069455,
+                    "control": 8,
+                    "volume": 13,
+                    "frequency": 12
+                },
+                {
+                    "id": 1738965070447,
+                    "control": 8,
+                    "volume": 11,
+                    "frequency": 14
+                },
+                {
+                    "id": 1738965071689,
+                    "control": 8,
+                    "volume": 10,
+                    "frequency": 16
+                },
+                {
+                    "id": 1738965111318,
+                    "control": 8,
+                    "volume": 9,
+                    "frequency": 18
+                },
+                {
+                    "id": 1738965112080,
+                    "control": 8,
+                    "volume": 8,
+                    "frequency": 20
+                },
+                {
+                    "id": 1738965209743,
+                    "control": 6,
+                    "volume": 7,
+                    "frequency": 22
+                },
+                {
+                    "id": 1738965210887,
+                    "control": 6,
+                    "volume": 6,
+                    "frequency": 24
+                },
+                {
+                    "id": 1738965211847,
+                    "control": 6,
+                    "volume": 5,
+                    "frequency": 26
+                },
+                {
+                    "id": 1738965212335,
+                    "control": 6,
+                    "volume": 4,
+                    "frequency": 28
+                },
+                {
+                    "id": 1738965391556,
+                    "control": 6,
+                    "volume": 2,
+                    "frequency": 30
+                }
+            ]
+        },
+        {
+            "id": 1738965579723,
+            "name": "Screech",
+            "tones": [
+                {
+                    "id": 1738965585985,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738965587172,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738965588219,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738965588756,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738965589794,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738965590170,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738965591211,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738965591538,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 1
+                },
+                {
+                    "id": 1738965592561,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 1
+                },
+                {
+                    "id": 1738965593074,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 1
+                },
+                {
+                    "id": 1738965593969,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 1
+                },
+                {
+                    "id": 1738965594486,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 1
+                },
+                {
+                    "id": 1738965595380,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 2
+                },
+                {
+                    "id": 1738965596189,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 2
+                },
+                {
+                    "id": 1738965597442,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 3
+                },
+                {
+                    "id": 1738965597874,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 3
+                },
+                {
+                    "id": 1738965602349,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738965602809,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738965603988,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738965604421,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738965732930,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 5
+                },
+                {
+                    "id": 1738965733961,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 5
+                },
+                {
+                    "id": 1738965734932,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 6
+                },
+                {
+                    "id": 1738965736089,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 7
+                },
+                {
+                    "id": 1738965737007,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 7
+                },
+                {
+                    "id": 1738965737576,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 7
+                },
+                {
+                    "id": 1738965738586,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 8
+                },
+                {
+                    "id": 1738965739028,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 9
+                },
+                {
+                    "id": 1738965740270,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 10
+                },
+                {
+                    "id": 1738965740713,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 11
+                },
+                {
+                    "id": 1738965743178,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 12
+                },
+                {
+                    "id": 1738965743675,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 13
+                },
+                {
+                    "id": 1738965744593,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 14
+                },
+                {
+                    "id": 1738965745053,
+                    "control": 3,
+                    "volume": 15,
+                    "frequency": 15
+                }
+            ]
+        },
+        {
+            "id": 1738966226987,
+            "name": "AlienDeath",
+            "tones": [
+                {
+                    "id": 1738966241955,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738966242564,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738966243492,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738966243892,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738966244789,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 1
+                },
+                {
+                    "id": 1738966245339,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 2
+                },
+                {
+                    "id": 1738966246301,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 3
+                },
+                {
+                    "id": 1738966246740,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738966247621,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 5
+                },
+                {
+                    "id": 1738966248020,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 6
+                },
+                {
+                    "id": 1738966248918,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 7
+                },
+                {
+                    "id": 1738966249368,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 8
+                },
+                {
+                    "id": 1738966250406,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 9
+                },
+                {
+                    "id": 1738966250822,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 10
+                },
+                {
+                    "id": 1738966251822,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 11
+                },
+                {
+                    "id": 1738966252291,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 12
+                },
+                {
+                    "id": 1738966253230,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 13
+                },
+                {
+                    "id": 1738966254204,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 14
+                },
+                {
+                    "id": 1738966292852,
+                    "control": 7,
+                    "volume": 15,
+                    "frequency": 15
+                },
+                {
+                    "id": 1738966293987,
+                    "control": 7,
+                    "volume": 14,
+                    "frequency": 17
+                },
+                {
+                    "id": 1738966294443,
+                    "control": 7,
+                    "volume": 13,
+                    "frequency": 19
+                },
+                {
+                    "id": 1738966295984,
+                    "control": 7,
+                    "volume": 12,
+                    "frequency": 21
+                },
+                {
+                    "id": 1738966296749,
+                    "control": 7,
+                    "volume": 11,
+                    "frequency": 23
+                },
+                {
+                    "id": 1738966305751,
+                    "control": 7,
+                    "volume": 10,
+                    "frequency": 25
+                },
+                {
+                    "id": 1738966306605,
+                    "control": 7,
+                    "volume": 9,
+                    "frequency": 27
+                },
+                {
+                    "id": 1738966311604,
+                    "control": 7,
+                    "volume": 8,
+                    "frequency": 29
+                },
+                {
+                    "id": 1738966346422,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 0
+                },
+                {
+                    "id": 1738966347787,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 1
+                },
+                {
+                    "id": 1738966348203,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 2
+                },
+                {
+                    "id": 1738966349788,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 3
+                },
+                {
+                    "id": 1738966350541,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 4
+                },
+                {
+                    "id": 1738966351556,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 5
+                },
+                {
+                    "id": 1738966352019,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 6
+                },
+                {
+                    "id": 1738966352869,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 7
+                },
+                {
+                    "id": 1738966353411,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 8
+                },
+                {
+                    "id": 1738966354419,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 9
+                },
+                {
+                    "id": 1738966354874,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 10
+                },
+                {
+                    "id": 1738966355837,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 11
+                },
+                {
+                    "id": 1738966356243,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 12
+                },
+                {
+                    "id": 1738966357667,
+                    "control": 14,
+                    "volume": 8,
+                    "frequency": 13
+                },
+                {
+                    "id": 1738966412491,
+                    "control": 14,
+                    "volume": 9,
+                    "frequency": 14
+                },
+                {
+                    "id": 1738966413260,
+                    "control": 14,
+                    "volume": 10,
+                    "frequency": 15
+                },
+                {
+                    "id": 1738966414386,
+                    "control": 14,
+                    "volume": 11,
+                    "frequency": 16
+                },
+                {
+                    "id": 1738966414873,
+                    "control": 14,
+                    "volume": 12,
+                    "frequency": 17
+                },
+                {
+                    "id": 1738966594530,
+                    "control": 14,
+                    "volume": 13,
+                    "frequency": 18
+                },
+                {
+                    "id": 1738966595684,
+                    "control": 14,
+                    "volume": 14,
+                    "frequency": 19
+                },
+                {
+                    "id": 1738966596460,
+                    "control": 14,
+                    "volume": 15,
+                    "frequency": 20
+                }
+            ]
+        }
+    ]
+}
