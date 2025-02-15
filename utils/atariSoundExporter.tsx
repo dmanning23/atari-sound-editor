@@ -18,7 +18,7 @@ SFX_Fcount = * -SFX_F
 
     let sfxCV = '\nSFX_CV:\n';
     soundEffects.forEach(effect => {
-        const cvValues = effect.tones.map(t => `$${t.channel.toString(16)}${t.volume.toString(16)}`).reverse().join(', ');
+        const cvValues = effect.tones.map(t => `$${t.control.toString(16)}${t.volume.toString(16)}`).reverse().join(', ');
         sfxCV += `    .byte 0,${cvValues} ; ${effect.name}\n`;
         sfxCV += `sfx${effect.name.toUpperCase().replace(/\s+/g, '')} = *-SFX_CV-1\n`;
     });

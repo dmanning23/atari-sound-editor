@@ -1,7 +1,7 @@
 // types/index.ts
 export interface Tone {
     id: number;
-    channel: number;
+    control: number;
     volume: number;
     frequency: number;
 }
