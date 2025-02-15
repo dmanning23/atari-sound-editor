@@ -9,8 +9,15 @@ import { SoundEffect, Tone } from '@/types';
 import { exportToAsm } from '@/utils/atariSoundExporter';
 
 declare global {
+    interface Go {
+        importObject: WebAssembly.Imports;
+        run: (instance: WebAssembly.Instance) => Promise<void>;
+    }
+
     interface Window {
-        Go: any;
+        Go: {
+            new(): Go;
+        };
         updateSamples: (json: string) => void;
         playSample: (name: string) => void;
     }
