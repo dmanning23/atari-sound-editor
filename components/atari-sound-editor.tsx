@@ -115,14 +115,22 @@ const AtariSoundEditor: FC = () => {
     const addTone = (effectId: number) => {
         setSoundEffects(soundEffects.map(effect => {
             if (effect.id === effectId) {
+                // Get the last tone in the effect if it exists
+                const lastTone = effect.tones.length > 0
+                    ? effect.tones[effect.tones.length - 1]
+                    : null;
+
+                // Create a new tone based on the last one, or use defaults if no tones exist
+                const newTone = {
+                    id: Date.now(),
+                    control: lastTone ? lastTone.control : 0,
+                    volume: lastTone ? lastTone.volume : 15,
+                    frequency: lastTone ? lastTone.frequency : 0
+                };
+
                 return {
                     ...effect,
-                    tones: [...effect.tones, {
-                        id: Date.now(),
-                        control: 0,
-                        volume: 15,
-                        frequency: 0
-                    }]
+                    tones: [...effect.tones, newTone]
                 };
             }
             return effect;
