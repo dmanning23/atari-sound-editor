@@ -17,14 +17,21 @@ SFX_Fcount = * -SFX_F
     `
 
     let sfxCV = '\nSFX_CV:\n';
+    let sfxLengths = '\n; Sound effect lengths for looping\n';
+
     soundEffects.forEach(effect => {
         const cvValues = effect.tones.map(t => `$${t.control.toString(16)}${t.volume.toString(16)}`).reverse().join(', ');
         sfxCV += `    .byte 0,${cvValues} ; ${effect.name}\n`;
         sfxCV += `sfx${effect.name.toUpperCase().replace(/\s+/g, '')} = *-SFX_CV-1\n`;
+
+        // Add length information for each sound effect
+        sfxLengths += `SFX_${effect.name.toUpperCase().replace(/\s+/g, '')}_LENGTH = #${effect.tones.length}\n`;
     });
 
     let sfxCVChunk =
         `
+${sfxLengths}
+
 ; calculate size of SFX_CV table and validate size
 SFX_CVcount = *-SFX_CV
 
