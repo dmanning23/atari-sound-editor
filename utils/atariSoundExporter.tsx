@@ -26,12 +26,12 @@ export const exportToAsm = (soundEffects: SoundEffect[], gameName: string) => {
         soundEffectData += `    .byte #${effect.tones.length} ; ${effect.name} Length\n`;
 
         // Add frequency values - reversed order from the original
-        const frequencies = effect.tones.map(t => t.frequency).reverse();
+        const frequencies = effect.tones.map(t => t.frequency);
         soundEffectData += `    ; Frequency values\n`;
         soundEffectData += `    .byte ${frequencies.join(', ')}\n`;
 
         // Add control/volume values - reversed order from the original
-        const cvValues = effect.tones.map(t => `$${t.control.toString(16)}${t.volume.toString(16)}`).reverse();
+        const cvValues = effect.tones.map(t => `$${t.control.toString(16)}${t.volume.toString(16)}`);
         soundEffectData += `    ; Control/Volume values\n`;
         soundEffectData += `    .byte ${cvValues.join(', ')}\n`;
     });
