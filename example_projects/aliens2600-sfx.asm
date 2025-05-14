@@ -1,92 +1,246 @@
-SFX_F:
-    .byte 0, 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 4, 4, 4, 4, 4, 4, 4 ; Shoot
-    .byte 0, 15, 14, 13, 12, 11, 10, 9, 8, 7, 7, 7, 6, 5, 5, 4, 4, 4, 4, 3, 3, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0 ; Screech
-    .byte 0, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 29, 27, 25, 23, 21, 19, 17, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0, 0 ; AlienDeath
 
-; calculate size of SFX_F table and validate size
-SFX_Fcount = * -SFX_F
-    if SFX_Fcount > 256
-        echo "SFX Warning: table SFX_F is too large"
-    endif
-    
-SFX_CV:
-    .byte 0,$62, $64, $65, $66, $67, $88, $89, $8a, $8b, $8d, $8e, $8f, $8f, $8f, $8f, $8f, $8f, $8f, $8f, $8f, $8f ; Shoot
-sfxSHOOT = *-SFX_CV-1
-    .byte 0,$3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f ; Screech
-sfxSCREECH = *-SFX_CV-1
-    .byte 0,$ef, $ee, $ed, $ec, $eb, $ea, $e9, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $78, $79, $7a, $7b, $7c, $7d, $7e, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f ; AlienDeath
-sfxALIENDEATH = *-SFX_CV-1
-
-; calculate size of SFX_CV table and validate size
-SFX_CVcount = *-SFX_CV
-
- if SFX_CVcount > 256
-     echo "SFX Warning: table SFX_CV is too large"
- endif
- if SFX_CVcount != SFX_Fcount
-    echo "SFX Warning: table SFX_F is not the same size as table SFX_CV"
- endif
+; Generic Sound Effect Engine for Atari 2600
+; -----------------------------------------
 
 
+
+; Sound Effect IDs
+SFX_ID_SHOOT = 1
+SFX_ID_SCREECH = 2
+SFX_ID_ALIENDEATH = 3
+
+
+; Sound effect lengths for reference
+SFX_SHOOT_LENGTH = #21
+SFX_SCREECH_LENGTH = #34
+SFX_ALIENDEATH_LENGTH = #47
+
+
+; Sound Effect Data Structures
+; Format: 
+;   First byte = Length of sound effect
+;   Next N bytes = Frequency values
+;   Next N bytes = Control/Volume values
+
+sfxSHOOT:
+    .byte #21 ; Shoot Length
+    ; Frequency values
+    .byte 30, 28, 26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 4, 4, 4, 4, 4, 4, 4
+    ; Control/Volume values
+    .byte $62, $64, $65, $66, $67, $88, $89, $8a, $8b, $8d, $8e, $8f, $8f, $8f, $8f, $8f, $8f, $8f, $8f, $8f, $8f
+
+sfxSCREECH:
+    .byte #34 ; Screech Length
+    ; Frequency values
+    .byte 15, 14, 13, 12, 11, 10, 9, 8, 7, 7, 7, 6, 5, 5, 4, 4, 4, 4, 3, 3, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0
+    ; Control/Volume values
+    .byte $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f, $3f
+
+sfxALIENDEATH:
+    .byte #47 ; AlienDeath Length
+    ; Frequency values
+    .byte 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 29, 27, 25, 23, 21, 19, 17, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0, 0
+    ; Control/Volume values
+    .byte $ef, $ee, $ed, $ec, $eb, $ea, $e9, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $e8, $78, $79, $7a, $7b, $7c, $7d, $7e, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f, $7f
+
+
+; Sound Effect Table
+SFXTable:
+    .word sfxSHOOT ; ID = 1
+    .word sfxSCREECH ; ID = 2
+    .word sfxALIENDEATH ; ID = 3
+
+
+; Turn off all sound
+; Call this during game initialization
 SFX_OFF:
-    ldx #0             ; silence sound output
+    ldx #0             ; Silence sound output
     stx SFX_LEFT
     stx SFX_RIGHT
     stx AUDV0
     stx AUDV1
     stx AUDC0
     stx AUDC1
+    stx SFX_LEFT_TIMER
+    stx SFX_RIGHT_TIMER
     rts
 
+; Trigger a sound effect
+; Input: Y register = sound effect ID (1, 2, 3, etc.)
+; Higher numbered IDs have higher priority
 SFX_TRIGGER:
-    ldx SFX_LEFT       ; test left channel
-    lda SFX_CV,x        ; CV value will be 0 if channel is idle
-    bne .leftnotfree   ; if not 0 then skip ahead
-    sty SFX_LEFT       ; channel is idle, use it
-    rts                ; all done
+    lda SFX_LEFT       ; Test left channel, will be 0 if channel is idle
+    bne .leftnotfree   ; If not 0 then skip ahead
+    sty SFX_LEFT       ; Channel is idle, use it
+    lda #0             ; Reset the timer for the left channel
+    sta SFX_LEFT_TIMER
+    rts                ; All done
 .leftnotfree:
-    ldx SFX_RIGHT      ; test right channel
-    lda SFX_CV,x        ; CV value will be 0 if channel is idle
-    bne .rightnotfree  ; if not 0 then skip ahead
-    sty SFX_RIGHT      ; channel is idle, use it
-    rts                ; all done
+    lda SFX_RIGHT      ; Test right channel, will be 0 if channel is idle
+    bne .rightnotfree  ; If not 0 then skip ahead
+    sty SFX_RIGHT      ; Channel is idle, use it
+    lda #0             ; Reset the timer for the right channel
+    sta SFX_RIGHT_TIMER
+    rts                ; All done
 .rightnotfree:
-    cpy SFX_LEFT       ; test sfx priority with left channel
-    bcc .leftnotlower  ; skip ahead if new sfx has lower priority than active sfx
-    sty SFX_LEFT       ; new sfx has higher priority so use left channel
-    rts                ; all done
+    cpy SFX_LEFT       ; Test sfx priority with left channel
+    bcc .leftnotlower  ; Skip ahead if new sfx has lower priority than active sfx
+    sty SFX_LEFT       ; New sfx has higher priority so use left channel
+    lda #0             ; Reset the timer for the left channel
+    sta SFX_LEFT_TIMER
+    rts                ; All done
 .leftnotlower:
-    cpy SFX_RIGHT      ; test sfx with right channel
-    bcc .rightnotlower ; skip ahead if new sfx has lower priority than active sfx
-    sty SFX_RIGHT      ; new sfx has higher priority so use right channel
+    cpy SFX_RIGHT      ; Test sfx with right channel
+    bcc .rightnotlower ; Skip ahead if new sfx has lower priority than active sfx
+    sty SFX_RIGHT      ; New sfx has higher priority so use right channel
+    lda #0             ; Reset the timer for the right channel
+    sta SFX_RIGHT_TIMER
 .rightnotlower:
     rts
 
+; Update sound effects - call this once per frame
 SFX_UPDATE:
-    ldx SFX_LEFT       ; get the pointer for the left channel
-    lda SFX_F,x         ; get the Frequency value
-    sta AUDF0          ; update the Frequency register
-    lda SFX_CV,x        ; get the combined Control and Volume value
-    sta AUDV0          ; update the Volume register
-    lsr                ; prep the Control value,
-    lsr                ;   it's stored in the upper nybble
-    lsr                ;   but must be in the lower nybble
-    lsr                ;   when Control is updated
-    sta AUDC0          ; update the Control register
-    beq .skipleftdec   ; skip ahead if Control = 0
-    dec SFX_LEFT       ; update pointer for left channel
-.skipleftdec:
-    ldx SFX_RIGHT      ; get the pointer for the right channel
-    lda SFX_F,x         ; get the Frequency value
-    sta AUDF1          ; update the Frequency register
-    lda SFX_CV,x        ; get the combined Control and Volume value
-    sta AUDV1          ; update the Volume register
-    lsr                ; prep the Control value,
-    lsr                ;   it's stored in the upper nybble
-    lsr                ;   but must be in the lower nybble
-    lsr                ;   when Control is updated
-    sta AUDC1          ; update the Control register
-    beq .skiprightdec  ; skip ahead if Control = 0
-    dec SFX_RIGHT      ; update pointer for right channel
-.skiprightdec:
-    rts                ; all done
+    ;----- LEFT CHANNEL UPDATE -----
+    lda SFX_LEFT          ; Load the left channel sound effect ID
+    beq .updateRight      ; If 0, no sound playing, jump to right channel
+    
+    ; Increment the left channel timer
+    inc SFX_LEFT_TIMER
+    
+    ; Calculate table index (ID-1)*2
+    tax                   ; Sound effect ID in X
+    dex                   ; Adjust for 0-based indexing
+    txa
+    asl                   ; Multiply by 2 (for 16-bit address)
+    tax                   ; Put index back in X
+    
+    ; Load sound effect address into TempWord
+    lda SFXTable,x
+    sta TempWord
+    lda SFXTable+1,x
+    sta TempWord+1
+    
+    ; Get length of the sound effect
+    ldy #0
+    lda (TempWord),y          ; Get length byte
+    
+    ; Check if sound effect is finished
+    cmp SFX_LEFT_TIMER
+    bne .leftContinue
+    
+    ; Sound effect is finished
+    lda #0
+    sta SFX_LEFT
+    sta SFX_LEFT_TIMER
+    sta AUDV0             ; Silence channel
+    jmp .updateRight
+    
+.leftContinue:
+    ; Get frequency value
+    ldy SFX_LEFT_TIMER
+    iny                   ; Skip length byte
+    lda (TempWord),y          ; Get frequency
+    sta AUDF0             
+    
+    ; Calculate offset to control/volume data
+    ldy #0
+    lda (TempWord),y          ; Get length again
+    clc
+    adc #1                ; Add 1 to skip length byte
+    adc SFX_LEFT_TIMER    ; Add current timer position
+    tay                   ; Index in Y
+    
+    ; Get control/volume value
+    lda (TempWord),y          ; Get CV byte
+    
+    ; Split into volume and control
+    tax                   ; Save full value in X
+    and #$0F              ; Mask for volume (low 4 bits)
+    sta AUDV0             ; Set volume
+    
+    txa                   ; Get full value back
+    lsr                   ; Shift right 4 times for control
+    lsr
+    lsr
+    lsr
+    sta AUDC0             ; Set control
+    
+    ;----- RIGHT CHANNEL UPDATE -----
+.updateRight:
+    lda SFX_RIGHT         ; Load the right channel sound effect ID
+    beq .done             ; If 0, no sound playing, we're done
+    
+    ; Increment the right channel timer
+    inc SFX_RIGHT_TIMER
+    
+    ; Calculate table index (ID-1)*2
+    tax                   ; Sound effect ID in X
+    dex                   ; Adjust for 0-based indexing
+    txa
+    asl                   ; Multiply by 2 (for 16-bit address)
+    tax                   ; Put index back in X
+    
+    ; Load sound effect address into TempWord
+    lda SFXTable,x
+    sta TempWord
+    lda SFXTable+1,x
+    sta TempWord+1
+    
+    ; Get length of the sound effect
+    ldy #0
+    lda (TempWord),y          ; Get length byte
+    
+    ; Check if sound effect is finished
+    cmp SFX_RIGHT_TIMER
+    bne .rightContinue
+    
+    ; Sound effect is finished
+    lda #0
+    sta SFX_RIGHT
+    sta SFX_RIGHT_TIMER
+    sta AUDV1             ; Silence channel
+    jmp .done
+    
+.rightContinue:
+    ; Get frequency value
+    ldy SFX_RIGHT_TIMER
+    iny                   ; Skip length byte
+    lda (TempWord),y          ; Get frequency
+    sta AUDF1             
+    
+    ; Calculate offset to control/volume data
+    ldy #0
+    lda (TempWord),y          ; Get length again
+    clc
+    adc #1                ; Add 1 to skip length byte
+    adc SFX_RIGHT_TIMER   ; Add current timer position
+    tay                   ; Index in Y
+    
+    ; Get control/volume value
+    lda (TempWord),y          ; Get CV byte
+    
+    ; Split into volume and control
+    tax                   ; Save full value in X
+    and #$0F              ; Mask for volume (low 4 bits)
+    sta AUDV1             ; Set volume
+    
+    txa                   ; Get full value back
+    lsr                   ; Shift right 4 times for control
+    lsr
+    lsr
+    lsr
+    sta AUDC1             ; Set control
+    
+.done:
+    rts
+
+; Example of how to use the sound engine:
+; 1. Initialize the sound engine
+;    jsr SFX_OFF
+;
+; 2. Trigger a sound effect
+;    ldy #SFX_ID_SHOOT (replace with your sound effect ID)
+;    jsr SFX_TRIGGER
+;
+; 3. Update the sound engine once per frame (in your main game loop)
+;    jsr SFX_UPDATE

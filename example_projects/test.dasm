@@ -18,8 +18,11 @@
 ;STEP 1: Export the -sfx.asm file from the atari-sound-editor tool and place it in this folder
 
 ;STEP 2: Add the indexes for sound effect driver
-SFX_LEFT:       ds 1
-SFX_RIGHT:      ds 1
+SFX_LEFT .byte
+SFX_RIGHT .byte
+SFX_LEFT_TIMER .byte
+SFX_RIGHT_TIMER .byte
+TempWord .word
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Code segment
@@ -28,7 +31,10 @@ SFX_RIGHT:      ds 1
     org $f000
 
 Start
+
     CLEAN_START
+    ;STEP 3: Turn off everything at the start of teh game
+    jsr SFX_OFF
 
 NextFrame
     lsr SWCHB	; test Game Reset switch
@@ -42,8 +48,8 @@ NextFrame
     bit INPT4
     bmi SkipButton
 
-    ;STEP 3: Fire sound effects by loading into the y register and jumping to SFX_TRIGGER
-    ldy sfxALIENDEATH
+    ;STEP 4: Fire sound effects by loading the ID into the y register and jumping to SFX_TRIGGER
+    ldy SFX_ID_ALIENDEATH
     jsr SFX_TRIGGER
 
 SkipButton
@@ -55,17 +61,17 @@ SkipButton
     ; 29 lines of overscan
     TIMER_SETUP 29
 
-    ;STEP 4: Update the sound effect engine during either underscan or overscan
+    ;STEP 5: Update the sound effect engine during either underscan or overscan
     jsr SFX_UPDATE
 
     TIMER_WAIT
     ; total = 262 lines, go to next frame
     jmp NextFrame
 
-    ;STEP 5: Include the -sfx.asm file that is exported from the atari-sound-tool web app
+    ;STEP 6: Include the -sfx.asm file that is exported from the atari-sound-tool web app
     include "aliens2600-sfx.asm"
 
-    ;STEP 6: profit?
+    ;STEP 7: profit?
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Epilogue
