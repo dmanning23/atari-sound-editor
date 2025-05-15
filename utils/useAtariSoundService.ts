@@ -1,7 +1,7 @@
 // src/hooks/useAtariSoundService.ts
 
-import { useState, useEffect } from 'react';
-import atariSoundService, { AtariSoundService } from '@/utils/atariSoundService';
+import { useState, useEffect, useCallback } from 'react';
+import atariSoundService from '../utils/atariSoundService';
 import { SoundEffect } from '@/types';
 
 export function useAtariSoundService() {
@@ -9,6 +9,7 @@ export function useAtariSoundService() {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
+    // Initialize the service when the component mounts
     useEffect(() => {
         let mounted = true;
 
@@ -39,21 +40,45 @@ export function useAtariSoundService() {
         };
     }, []);
 
-    const updateSamples = (gameName: string, soundEffects: SoundEffect[]) => {
-        if (initialized) {
-            atariSoundService.updateSamples(gameName, soundEffects);
+    // Memoize the updateSamples function to avoid unnecessary re-renders
+    const updateSamples = useCallback((gameName: string, soundEffects: SoundEffect[]) => {
+        if (atariSoundService.isInitialized()) {
+            try {
+                atariSoundService.updateSamples(gameName, soundEffects);
+            } catch (err) {
+                console.error('Error updating samples:', err);
+                // If service reports it's no longer initialized, update state
+                if (!atariSoundService.isInitialized()) {
+                    setInitialized(false);
+                    setError('WASM service exited unexpectedly');
+                }
+            }
         }
-    };
+    }, []);
 
-    const playSample = async (name: string) => {
+    // Memoize the playSample function
+    const playSample = useCallback(async (name: string) => {
         try {
             await atariSoundService.playSample(name);
+
+            // If service was reinitialized, update state
+            if (atariSoundService.isInitialized() && !initialized) {
+                setInitialized(true);
+                setError(null);
+            }
+
             return true;
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to play sample');
+
+            // If service reports it's no longer initialized, update state
+            if (!atariSoundService.isInitialized()) {
+                setInitialized(false);
+            }
+
             return false;
         }
-    };
+    }, [initialized]);
 
     return {
         initialized,

@@ -18,7 +18,7 @@ const AtariSoundEditor: FC = () => {
 
     // Update samples whenever sound effects change
     useEffect(() => {
-        if (initialized) {
+        if (initialized && soundEffects.length > 0) {
             updateSamples(gameName, soundEffects);
         }
     }, [initialized, soundEffects, gameName, updateSamples]);
