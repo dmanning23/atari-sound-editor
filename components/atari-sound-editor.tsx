@@ -7,93 +7,22 @@ import { Label } from '@/components/ui/label';
 import type { FC } from 'react';
 import { SoundEffect, Tone } from '@/types';
 import { exportToAsm } from '@/utils/atariSoundExporter';
-
-declare global {
-    interface Go {
-        importObject: WebAssembly.Imports;
-        run: (instance: WebAssembly.Instance) => Promise<void>;
-    }
-
-    interface Window {
-        Go: {
-            new(): Go;
-        };
-        updateSamples: (json: string) => void;
-        playSample: (name: string) => void;
-    }
-}
-
-const loadWasmExec = () => {
-    return new Promise<void>((resolve, reject) => {
-        if (window.Go) {
-            resolve();
-            return;
-        }
-
-        const script = document.createElement('script');
-        script.src = '/wasm_exec.js';
-        script.onload = () => resolve();
-        script.onerror = () => reject(new Error('Failed to load wasm_exec.js'));
-        document.head.appendChild(script);
-    });
-};
+import { useAtariSoundService } from '@/utils/useAtariSoundService';
 
 const AtariSoundEditor: FC = () => {
     const [gameName, setGameName] = useState('My Atari Game');
     const [soundEffects, setSoundEffects] = useState<SoundEffect[]>([]);
-    const [wasmLoaded, setWasmLoaded] = useState(false);
-    const [wasmError, setWasmError] = useState<string | null>(null);
 
+    // Use the sound service hook
+    const { initialized, loading, error, updateSamples, playSample } = useAtariSoundService();
+
+    // Update samples whenever sound effects change
     useEffect(() => {
-        const initWasm = async () => {
-            try {
-                // First, load the wasm_exec.js script
-                await loadWasmExec();
-
-                // Then initialize WASM
-                const go = new window.Go();
-                const result = await WebAssembly.instantiateStreaming(
-                    fetch("/main.wasm"),
-                    go.importObject
-                );
-                go.run(result.instance);
-                setWasmLoaded(true);
-                setWasmError(null);
-            } catch (error) {
-                console.error('Failed to initialize WASM:', error);
-                setWasmError(error instanceof Error ? error.message : 'Failed to initialize WASM');
-            }
-        };
-
-        initWasm();
-    }, []);
-
-    // Update WASM samples whenever sound effects change
-    useEffect(() => {
-        if (wasmLoaded && window.updateSamples) {
-            const projectData = {
-                gameName,
-                soundEffects
-            };
-            try {
-                window.updateSamples(JSON.stringify(projectData));
-            } catch (error) {
-                console.error('Failed to update samples:', error);
-            }
+        if (initialized) {
+            updateSamples(gameName, soundEffects);
         }
-    }, [wasmLoaded, soundEffects, gameName]);
+    }, [initialized, soundEffects, gameName, updateSamples]);
 
-    const playSoundEffect = (name: string) => {
-        if (wasmLoaded && window.playSample) {
-            try {
-                window.playSample(name);
-            } catch (error) {
-                console.error('Failed to play sample:', error);
-            }
-        }
-    };
-
-    // Rest of the component remains the same...
     const addSoundEffect = () => {
         setSoundEffects([...soundEffects, {
             id: Date.now(),
@@ -200,9 +129,15 @@ const AtariSoundEditor: FC = () => {
 
     return (
         <div className="max-w-4xl mx-auto p-4 space-y-4">
-            {wasmError && (
+            {error && (
                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-                    Failed to initialize sound system: {wasmError}
+                    Failed to initialize sound system: {error}
+                </div>
+            )}
+
+            {loading && (
+                <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative">
+                    Initializing sound system...
                 </div>
             )}
 
@@ -249,9 +184,9 @@ const AtariSoundEditor: FC = () => {
                                     className="text-xl font-semibold w-64"
                                 />
                                 <Button
-                                    onClick={() => playSoundEffect(effect.name)}
+                                    onClick={() => playSample(effect.name)}
                                     size="sm"
-                                    disabled={!wasmLoaded}
+                                    disabled={!initialized}
                                 >
                                     Play
                                 </Button>
