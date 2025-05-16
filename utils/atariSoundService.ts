@@ -1,7 +1,6 @@
 // src/utils/atariSoundService.ts
 import { SoundEffect } from '@/types';
 
-// Extend the Window interface to include Go WASM specific properties
 declare global {
     interface Go {
         importObject: WebAssembly.Imports;
@@ -17,7 +16,6 @@ declare global {
     }
 }
 
-// Define the service interface
 export interface AtariSoundService {
     initialize(): Promise<void>;
     updateSamples(gameName: string, soundEffects: SoundEffect[]): void;
@@ -26,7 +24,6 @@ export interface AtariSoundService {
     getError(): string | null;
 }
 
-// Implementation
 class AtariSoundServiceImpl implements AtariSoundService {
     private wasmModule: WebAssembly.Module | null = null;
     private goInstance: Go | null = null;
@@ -34,13 +31,14 @@ class AtariSoundServiceImpl implements AtariSoundService {
     private initialized = false;
     private error: string | null = null;
     private initializationPromise: Promise<void> | null = null;
+    private exited = false;
 
     constructor() {
         // No initialization in constructor
     }
 
     isInitialized(): boolean {
-        return this.initialized && this.wasmInstance !== null;
+        return this.initialized && this.wasmInstance !== null && !this.exited;
     }
 
     getError(): string | null {
@@ -48,6 +46,9 @@ class AtariSoundServiceImpl implements AtariSoundService {
     }
 
     async initialize(): Promise<void> {
+        // Clear exited flag when we initialize
+        this.exited = false;
+
         // If already initializing, return the existing promise
         if (this.initializationPromise) {
             return this.initializationPromise;
@@ -109,18 +110,21 @@ class AtariSoundServiceImpl implements AtariSoundService {
         // Instantiate the module
         const instance = await WebAssembly.instantiate(this.wasmModule, go.importObject);
         this.wasmInstance = instance;
+        this.exited = false;
 
         // Run the instance
         go.run(instance).catch((e: Error) => {
             console.log('Go instance exited, will re-instantiate on next use');
             this.wasmInstance = null;
             this.goInstance = null;
+            this.exited = true;
         });
     }
 
     updateSamples(gameName: string, soundEffects: SoundEffect[]): void {
-        if (!this.isInitialized() || !window.updateSamples) {
-            console.warn('Cannot update samples: WASM not initialized');
+        // Skip if exited or not initialized
+        if (this.exited || !this.isInitialized() || !window.updateSamples) {
+            console.warn('Skipping updateSamples: WASM not initialized or exited');
             return;
         }
 
@@ -138,13 +142,14 @@ class AtariSoundServiceImpl implements AtariSoundService {
             if (error instanceof Error && error.message.includes('Go program has already exited')) {
                 this.wasmInstance = null;
                 this.goInstance = null;
+                this.exited = true;
             }
         }
     }
 
     async playSample(name: string): Promise<void> {
         // Re-instantiate if needed
-        if (!this.isInitialized()) {
+        if (this.exited || !this.isInitialized()) {
             await this.initialize();
         }
 
@@ -161,9 +166,10 @@ class AtariSoundServiceImpl implements AtariSoundService {
             if (error instanceof Error && error.message.includes('Go program has already exited')) {
                 this.wasmInstance = null;
                 this.goInstance = null;
+                this.exited = true;
 
                 // Try once more after re-initializing
-                await this.instantiateWasm();
+                await this.initialize();
                 try {
                     window.playSample(name);
                 } catch (retryError) {
