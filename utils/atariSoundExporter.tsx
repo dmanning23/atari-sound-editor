@@ -106,9 +106,6 @@ SFX_UPDATE:
     lda SFX_LEFT          ; Load the left channel sound effect ID
     beq .updateRight      ; If 0, no sound playing, jump to right channel
     
-    ; Increment the left channel timer
-    inc SFX_LEFT_TIMER
-    
     ; Calculate table index (ID-1)*2
     tax                   ; Sound effect ID in X
     dex                   ; Adjust for 0-based indexing
@@ -122,38 +119,22 @@ SFX_UPDATE:
     lda SFXTable+1,x
     sta TempWord+1
     
-    ; Get length of the sound effect
-    ldy #0
-    lda (TempWord),y          ; Get length byte
-    
-    ; Check if sound effect is finished
-    cmp SFX_LEFT_TIMER
-    bne .leftContinue
-    
-    ; Sound effect is finished
-    lda #0
-    sta SFX_LEFT
-    sta SFX_LEFT_TIMER
-    sta AUDV0             ; Silence channel
-    jmp .updateRight
-    
-.leftContinue:
-    ; Get frequency value
+    ; Get frequency value BEFORE incrementing timer
     ldy SFX_LEFT_TIMER
     iny                   ; Skip length byte
-    lda (TempWord),y          ; Get frequency
+    lda (TempWord),y      ; Get frequency
     sta AUDF0             
     
     ; Calculate offset to control/volume data
     ldy #0
-    lda (TempWord),y          ; Get length again
+    lda (TempWord),y      ; Get length
     clc
     adc #1                ; Add 1 to skip length byte
     adc SFX_LEFT_TIMER    ; Add current timer position
     tay                   ; Index in Y
     
     ; Get control/volume value
-    lda (TempWord),y          ; Get CV byte
+    lda (TempWord),y      ; Get CV byte
     
     ; Split into volume and control
     tax                   ; Save full value in X
@@ -167,13 +148,27 @@ SFX_UPDATE:
     lsr
     sta AUDC0             ; Set control
     
+    ; NOW increment the timer after using it
+    inc SFX_LEFT_TIMER
+    
+    ; Get length of the sound effect to check if finished
+    ldy #0
+    lda (TempWord),y      ; Get length byte
+    
+    ; Check if sound effect is finished
+    cmp SFX_LEFT_TIMER
+    bne .updateRight      ; Continue if not finished
+    
+    ; Sound effect is finished
+    lda #0
+    sta SFX_LEFT
+    sta SFX_LEFT_TIMER
+    sta AUDV0             ; Silence channel
+    
     ;----- RIGHT CHANNEL UPDATE -----
 .updateRight:
     lda SFX_RIGHT         ; Load the right channel sound effect ID
     beq .done             ; If 0, no sound playing, we're done
-    
-    ; Increment the right channel timer
-    inc SFX_RIGHT_TIMER
     
     ; Calculate table index (ID-1)*2
     tax                   ; Sound effect ID in X
@@ -188,38 +183,22 @@ SFX_UPDATE:
     lda SFXTable+1,x
     sta TempWord+1
     
-    ; Get length of the sound effect
-    ldy #0
-    lda (TempWord),y          ; Get length byte
-    
-    ; Check if sound effect is finished
-    cmp SFX_RIGHT_TIMER
-    bne .rightContinue
-    
-    ; Sound effect is finished
-    lda #0
-    sta SFX_RIGHT
-    sta SFX_RIGHT_TIMER
-    sta AUDV1             ; Silence channel
-    jmp .done
-    
-.rightContinue:
-    ; Get frequency value
+    ; Get frequency value BEFORE incrementing timer
     ldy SFX_RIGHT_TIMER
     iny                   ; Skip length byte
-    lda (TempWord),y          ; Get frequency
+    lda (TempWord),y      ; Get frequency
     sta AUDF1             
     
     ; Calculate offset to control/volume data
     ldy #0
-    lda (TempWord),y          ; Get length again
+    lda (TempWord),y      ; Get length
     clc
     adc #1                ; Add 1 to skip length byte
     adc SFX_RIGHT_TIMER   ; Add current timer position
     tay                   ; Index in Y
     
     ; Get control/volume value
-    lda (TempWord),y          ; Get CV byte
+    lda (TempWord),y      ; Get CV byte
     
     ; Split into volume and control
     tax                   ; Save full value in X
@@ -232,6 +211,23 @@ SFX_UPDATE:
     lsr
     lsr
     sta AUDC1             ; Set control
+    
+    ; NOW increment the timer after using it
+    inc SFX_RIGHT_TIMER
+    
+    ; Get length of the sound effect to check if finished
+    ldy #0
+    lda (TempWord),y      ; Get length byte
+    
+    ; Check if sound effect is finished
+    cmp SFX_RIGHT_TIMER
+    bne .done             ; Continue if not finished
+    
+    ; Sound effect is finished
+    lda #0
+    sta SFX_RIGHT
+    sta SFX_RIGHT_TIMER
+    sta AUDV1             ; Silence channel
     
 .done:
     rts
