@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Play, Plus, RefreshCw, Save, Trash2, Upload } from 'lucide-react';
+import { ChevronDown, ChevronRight, Download, Play, Plus, RefreshCw, Save, Trash2, Upload } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -83,6 +83,20 @@ const StatusBadge: FC<StatusBadgeProps> = ({ initialized, loading, error, onReco
 const AtariSoundEditor: FC = () => {
     const [gameName, setGameName] = useState('My Atari Game');
     const [soundEffects, setSoundEffects] = useState<SoundEffect[]>([]);
+    const [collapsedIds, setCollapsedIds] = useState<Set<number>>(new Set());
+
+    const toggleCollapsed = (id: number) =>
+        setCollapsedIds(prev => {
+            const next = new Set(prev);
+            next.has(id) ? next.delete(id) : next.add(id);
+            return next;
+        });
+
+    const collapseAll = () =>
+        setCollapsedIds(new Set(soundEffects.map(e => e.id)));
+
+    const expandAll = () =>
+        setCollapsedIds(new Set());
 
     const { initialized, loading, error, updateSamples, playSample, reconnect } =
         useAtariSoundService();
@@ -199,7 +213,19 @@ const AtariSoundEditor: FC = () => {
                             onReconnect={reconnect}
                         />
 
-                        <div className="flex gap-2 ml-auto">
+                        <div className="flex gap-2 ml-auto flex-wrap">
+                            {soundEffects.length > 0 && (
+                                <>
+                                    <Button onClick={collapseAll} size="sm" variant="ghost" className="text-muted-foreground">
+                                        <ChevronRight className="w-4 h-4 mr-1" />
+                                        Collapse all
+                                    </Button>
+                                    <Button onClick={expandAll} size="sm" variant="ghost" className="text-muted-foreground">
+                                        <ChevronDown className="w-4 h-4 mr-1" />
+                                        Expand all
+                                    </Button>
+                                </>
+                            )}
                             <Button size="sm" className="relative" variant="outline">
                                 <Upload className="w-4 h-4 mr-1" />
                                 Load
@@ -229,6 +255,15 @@ const AtariSoundEditor: FC = () => {
                     <Card key={effect.id}>
                         <CardHeader className="pb-2">
                             <div className="flex items-center gap-2">
+                                <button
+                                    onClick={() => toggleCollapsed(effect.id)}
+                                    className="shrink-0 text-muted-foreground hover:text-foreground transition-colors"
+                                    title={collapsedIds.has(effect.id) ? 'Expand' : 'Collapse'}
+                                >
+                                    {collapsedIds.has(effect.id)
+                                        ? <ChevronRight className="w-4 h-4" />
+                                        : <ChevronDown className="w-4 h-4" />}
+                                </button>
                                 <Input
                                     value={effect.name}
                                     onChange={(e) => updateSoundEffectName(effect.id, e.target.value)}
@@ -253,14 +288,14 @@ const AtariSoundEditor: FC = () => {
                                     <Trash2 className="w-4 h-4" />
                                 </Button>
                             </div>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-muted-foreground pl-6">
                                 {effect.tones.length === 0
                                     ? 'No tones — add one below'
                                     : `${effect.tones.length} tone${effect.tones.length !== 1 ? 's' : ''}`}
                             </p>
                         </CardHeader>
 
-                        <CardContent className="pt-0">
+                        {!collapsedIds.has(effect.id) && <CardContent className="pt-0">
                             <div className="space-y-0 divide-y">
                                 {effect.tones.map((tone, index) => (
                                     <div key={tone.id} className="py-3 flex items-start gap-3">
@@ -315,7 +350,7 @@ const AtariSoundEditor: FC = () => {
                                 <Plus className="w-4 h-4 mr-1" />
                                 Add Tone
                             </Button>
-                        </CardContent>
+                        </CardContent>}
                     </Card>
                 ))}
 
