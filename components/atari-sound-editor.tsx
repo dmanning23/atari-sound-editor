@@ -30,7 +30,7 @@ const SliderField: FC<SliderFieldProps> = ({ label, value, min, max, onChange })
             max={max}
             value={value}
             onChange={(e) => onChange(parseInt(e.target.value, 10))}
-            className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-slate-700 dark:accent-slate-300"
+            className="atari-slider w-full cursor-pointer"
         />
         <div className="flex justify-between text-[10px] text-muted-foreground/50">
             <span>{min}</span>

@@ -80,3 +80,46 @@
     @apply bg-background text-foreground;
     }
 }
+
+/* ─── Range slider ─────────────────────────────────────────────────────────── */
+@layer components {
+  .atari-slider {
+    @apply h-5 bg-transparent;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* Track — WebKit (Chrome, Safari, Edge) */
+  .atari-slider::-webkit-slider-runnable-track {
+    @apply h-2 rounded-full bg-slate-200 dark:bg-slate-700;
+  }
+  .atari-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    @apply w-4 h-4 rounded-full bg-slate-700 dark:bg-slate-200 border-0 cursor-pointer;
+    margin-top: -4px; /* centre thumb on track */
+  }
+
+  /* Track — Firefox */
+  .atari-slider::-moz-range-track {
+    @apply h-2 rounded-full bg-slate-200 dark:bg-slate-700;
+  }
+  .atari-slider::-moz-range-thumb {
+    @apply w-4 h-4 rounded-full bg-slate-700 dark:bg-slate-200 border-0 cursor-pointer;
+  }
+
+  /* Filled portion — Firefox */
+  .atari-slider::-moz-range-progress {
+    @apply h-2 rounded-full bg-slate-500 dark:bg-slate-400;
+  }
+
+  /* Focus ring */
+  .atari-slider:focus-visible {
+    @apply outline-none;
+  }
+  .atari-slider:focus-visible::-webkit-slider-thumb {
+    @apply ring-2 ring-offset-2 ring-slate-500;
+  }
+  .atari-slider:focus-visible::-moz-range-thumb {
+    @apply ring-2 ring-offset-2 ring-slate-500;
+  }
+}
