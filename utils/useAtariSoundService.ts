@@ -1,6 +1,6 @@
 // src/hooks/useAtariSoundService.ts
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import atariSoundService from '../utils/atariSoundService';
 import { SoundEffect } from '@/types';
 
@@ -8,83 +8,106 @@ export function useAtariSoundService() {
     const [initialized, setInitialized] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
+    const mountedRef = useRef(true);
 
-    // Initialize the service when the component mounts
     useEffect(() => {
-        let mounted = true;
+        mountedRef.current = true;
 
-        const initService = async () => {
+        const doInit = async () => {
             try {
                 setLoading(true);
                 await atariSoundService.initialize();
-                if (mounted) {
+                if (mountedRef.current) {
                     setInitialized(true);
                     setError(null);
                 }
             } catch (err) {
-                if (mounted) {
+                if (mountedRef.current) {
                     setError(err instanceof Error ? err.message : 'Failed to initialize sound service');
                     setInitialized(false);
                 }
             } finally {
-                if (mounted) {
+                if (mountedRef.current) {
                     setLoading(false);
                 }
             }
         };
 
-        initService();
+        // When Go exits, mark as disconnected then auto-reconnect.
+        // The service caches the last samples, so after re-init they'll be
+        // restored automatically on the next playSample call.
+        atariSoundService.setExitCallback(async () => {
+            if (!mountedRef.current) return;
+            setInitialized(false);
+            setLoading(true);
+            try {
+                await atariSoundService.initialize();
+                if (mountedRef.current) {
+                    setInitialized(true);
+                    setError(null);
+                }
+            } catch (err) {
+                if (mountedRef.current) {
+                    setError(err instanceof Error ? err.message : 'Sound service disconnected');
+                }
+            } finally {
+                if (mountedRef.current) {
+                    setLoading(false);
+                }
+            }
+        });
+
+        doInit();
 
         return () => {
-            mounted = false;
+            mountedRef.current = false;
         };
     }, []);
 
-    // Memoize the updateSamples function to avoid unnecessary re-renders
     const updateSamples = useCallback((gameName: string, soundEffects: SoundEffect[]) => {
-        if (atariSoundService.isInitialized()) {
-            try {
-                atariSoundService.updateSamples(gameName, soundEffects);
-            } catch (err) {
-                console.error('Error updating samples:', err);
-                // If service reports it's no longer initialized, update state
-                if (!atariSoundService.isInitialized()) {
-                    setInitialized(false);
-                    setError('WASM service exited unexpectedly');
-                }
+        // Always call — the service caches even when not yet ready, and
+        // will skip the WASM call if not initialized.
+        try {
+            atariSoundService.updateSamples(gameName, soundEffects);
+        } catch (err) {
+            console.error('Error updating samples:', err);
+            if (!atariSoundService.isInitialized()) {
+                setInitialized(false);
+                setError('WASM service exited unexpectedly');
             }
         }
     }, []);
 
-    // Memoize the playSample function
     const playSample = useCallback(async (name: string) => {
         try {
             await atariSoundService.playSample(name);
-
-            // If service was reinitialized, update state
-            if (atariSoundService.isInitialized() && !initialized) {
+            if (atariSoundService.isInitialized()) {
                 setInitialized(true);
                 setError(null);
             }
-
             return true;
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Failed to play sample');
-
-            // If service reports it's no longer initialized, update state
             if (!atariSoundService.isInitialized()) {
                 setInitialized(false);
             }
-
             return false;
         }
-    }, [initialized]);
+    }, []);
 
-    return {
-        initialized,
-        loading,
-        error,
-        updateSamples,
-        playSample
-    };
+    const reconnect = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            await atariSoundService.initialize();
+            setInitialized(true);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to reconnect');
+            setInitialized(false);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    return { initialized, loading, error, updateSamples, playSample, reconnect };
 }

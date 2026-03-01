@@ -1,103 +1,156 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Plus, Save, Trash2, Upload } from 'lucide-react';
+import { Download, Play, Plus, RefreshCw, Save, Trash2, Upload } from 'lucide-react';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import type { FC } from 'react';
 import { SoundEffect, Tone } from '@/types';
 import { exportToAsm } from '@/utils/atariSoundExporter';
 import { useAtariSoundService } from '@/utils/useAtariSoundService';
 
+// ─── Slider row ──────────────────────────────────────────────────────────────
+
+interface SliderFieldProps {
+    label: string;
+    value: number;
+    min: number;
+    max: number;
+    onChange: (v: number) => void;
+}
+
+const SliderField: FC<SliderFieldProps> = ({ label, value, min, max, onChange }) => (
+    <div className="flex flex-col gap-1 min-w-0">
+        <div className="flex justify-between text-xs text-muted-foreground">
+            <span>{label}</span>
+            <span className="font-mono tabular-nums w-6 text-right">{value}</span>
+        </div>
+        <input
+            type="range"
+            min={min}
+            max={max}
+            value={value}
+            onChange={(e) => onChange(parseInt(e.target.value, 10))}
+            className="w-full h-2 rounded-lg appearance-none cursor-pointer accent-slate-700 dark:accent-slate-300"
+        />
+        <div className="flex justify-between text-[10px] text-muted-foreground/50">
+            <span>{min}</span>
+            <span>{max}</span>
+        </div>
+    </div>
+);
+
+// ─── Status badge ─────────────────────────────────────────────────────────────
+
+interface StatusBadgeProps {
+    initialized: boolean;
+    loading: boolean;
+    error: string | null;
+    onReconnect: () => void;
+}
+
+const StatusBadge: FC<StatusBadgeProps> = ({ initialized, loading, error, onReconnect }) => {
+    if (loading) {
+        return (
+            <span className="flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                Connecting…
+            </span>
+        );
+    }
+    if (initialized) {
+        return (
+            <span className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                Sound ready
+            </span>
+        );
+    }
+    return (
+        <button
+            onClick={onReconnect}
+            className="flex items-center gap-1.5 text-xs text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200 transition-colors"
+            title={error ?? 'Sound engine disconnected'}
+        >
+            <span className="w-2 h-2 rounded-full bg-red-500" />
+            Disconnected — click to reconnect
+            <RefreshCw className="w-3 h-3" />
+        </button>
+    );
+};
+
+// ─── Main editor ─────────────────────────────────────────────────────────────
+
 const AtariSoundEditor: FC = () => {
     const [gameName, setGameName] = useState('My Atari Game');
     const [soundEffects, setSoundEffects] = useState<SoundEffect[]>([]);
 
-    // Use the sound service hook
-    const { initialized, loading, error, updateSamples, playSample } = useAtariSoundService();
+    const { initialized, loading, error, updateSamples, playSample, reconnect } =
+        useAtariSoundService();
 
-    // Update samples whenever sound effects change
+    // Keep WASM in sync whenever data changes
     useEffect(() => {
-        if (initialized && soundEffects.length > 0) {
-            updateSamples(gameName, soundEffects);
-        }
-    }, [initialized, soundEffects, gameName, updateSamples]);
+        updateSamples(gameName, soundEffects);
+    }, [soundEffects, gameName, updateSamples]);
+
+    // ── Sound effect operations ─────────────────────────────────────────────
 
     const addSoundEffect = () => {
-        setSoundEffects([...soundEffects, {
+        setSoundEffects(prev => [...prev, {
             id: Date.now(),
             name: 'New Sound Effect',
-            tones: []
+            tones: [],
         }]);
     };
 
     const deleteSoundEffect = (id: number) => {
-        setSoundEffects(soundEffects.filter(effect => effect.id !== id));
+        setSoundEffects(prev => prev.filter(e => e.id !== id));
     };
 
     const updateSoundEffectName = (id: number, name: string) => {
-        setSoundEffects(soundEffects.map(effect =>
-            effect.id === id ? { ...effect, name } : effect
-        ));
+        setSoundEffects(prev => prev.map(e => e.id === id ? { ...e, name } : e));
     };
 
+    // ── Tone operations ─────────────────────────────────────────────────────
+
     const addTone = (effectId: number) => {
-        setSoundEffects(soundEffects.map(effect => {
-            if (effect.id === effectId) {
-                // Get the last tone in the effect if it exists
-                const lastTone = effect.tones.length > 0
-                    ? effect.tones[effect.tones.length - 1]
-                    : null;
-
-                // Create a new tone based on the last one, or use defaults if no tones exist
-                const newTone = {
-                    id: Date.now(),
-                    control: lastTone ? lastTone.control : 0,
-                    volume: lastTone ? lastTone.volume : 15,
-                    frequency: lastTone ? lastTone.frequency : 0
-                };
-
-                return {
-                    ...effect,
-                    tones: [...effect.tones, newTone]
-                };
-            }
-            return effect;
+        setSoundEffects(prev => prev.map(effect => {
+            if (effect.id !== effectId) return effect;
+            const last = effect.tones[effect.tones.length - 1] ?? null;
+            const newTone: Tone = {
+                id: Date.now(),
+                control: last?.control ?? 0,
+                volume: last?.volume ?? 15,
+                frequency: last?.frequency ?? 0,
+            };
+            return { ...effect, tones: [...effect.tones, newTone] };
         }));
     };
 
     const updateTone = (effectId: number, toneId: number, field: keyof Tone, value: number) => {
-        setSoundEffects(soundEffects.map(effect => {
-            if (effect.id === effectId) {
-                return {
-                    ...effect,
-                    tones: effect.tones.map(tone =>
-                        tone.id === toneId ? { ...tone, [field]: Number(value) } : tone
-                    )
-                };
-            }
-            return effect;
+        setSoundEffects(prev => prev.map(effect => {
+            if (effect.id !== effectId) return effect;
+            return {
+                ...effect,
+                tones: effect.tones.map(t =>
+                    t.id === toneId ? { ...t, [field]: value } : t
+                ),
+            };
         }));
     };
 
     const deleteTone = (effectId: number, toneId: number) => {
-        setSoundEffects(soundEffects.map(effect => {
-            if (effect.id === effectId) {
-                return {
-                    ...effect,
-                    tones: effect.tones.filter(tone => tone.id !== toneId)
-                };
-            }
-            return effect;
+        setSoundEffects(prev => prev.map(effect => {
+            if (effect.id !== effectId) return effect;
+            return { ...effect, tones: effect.tones.filter(t => t.id !== toneId) };
         }));
     };
 
+    // ── Persistence ─────────────────────────────────────────────────────────
+
     const saveProject = () => {
-        const project = {
-            gameName,
-            soundEffects
-        };
-        const blob = new Blob([JSON.stringify(project, null, 2)], { type: 'application/json' });
+        const blob = new Blob([JSON.stringify({ gameName, soundEffects }, null, 2)], {
+            type: 'application/json',
+        });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -109,49 +162,46 @@ const AtariSoundEditor: FC = () => {
     };
 
     const loadProject = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        if (files && files[0]) {
-            const reader = new FileReader();
-            reader.onload = (e: ProgressEvent<FileReader>) => {
-                try {
-                    if (e.target?.result) {
-                        const project = JSON.parse(e.target.result as string);
-                        setGameName(project.gameName);
-                        setSoundEffects(project.soundEffects);
-                    }
-                } catch (error) {
-                    console.error('Error loading project:', error);
-                }
-            };
-            reader.readAsText(files[0]);
-        }
+        const file = event.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const project = JSON.parse(e.target?.result as string);
+                setGameName(project.gameName);
+                setSoundEffects(project.soundEffects);
+            } catch {
+                console.error('Error loading project');
+            }
+        };
+        reader.readAsText(file);
     };
+
+    // ── Render ──────────────────────────────────────────────────────────────
 
     return (
         <div className="max-w-4xl mx-auto p-4 space-y-4">
-            {error && (
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-                    Failed to initialize sound system: {error}
-                </div>
-            )}
 
-            {loading && (
-                <div className="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative">
-                    Initializing sound system...
-                </div>
-            )}
-
+            {/* Header */}
             <Card>
                 <CardHeader>
-                    <div className="flex items-center justify-between w-full gap-8">
+                    <div className="flex flex-wrap items-center gap-4">
                         <Input
                             value={gameName}
                             onChange={(e) => setGameName(e.target.value)}
-                            className="text-2xl font-bold w-96"
+                            className="text-xl font-bold flex-1 min-w-48"
                         />
-                        <div className="flex gap-2">
-                            <Button size="sm" className="relative">
-                                <Upload className="w-4 h-4 mr-2" />
+
+                        <StatusBadge
+                            initialized={initialized}
+                            loading={loading}
+                            error={error}
+                            onReconnect={reconnect}
+                        />
+
+                        <div className="flex gap-2 ml-auto">
+                            <Button size="sm" className="relative" variant="outline">
+                                <Upload className="w-4 h-4 mr-1" />
                                 Load
                                 <input
                                     type="file"
@@ -160,12 +210,12 @@ const AtariSoundEditor: FC = () => {
                                     className="absolute inset-0 opacity-0 cursor-pointer"
                                 />
                             </Button>
-                            <Button onClick={saveProject} size="sm">
-                                <Save className="w-4 h-4 mr-2" />
+                            <Button onClick={saveProject} size="sm" variant="outline">
+                                <Save className="w-4 h-4 mr-1" />
                                 Save
                             </Button>
-                            <Button onClick={() => exportToAsm(soundEffects, gameName)} size="sm">
-                                <Download className="w-4 h-4 mr-2" />
+                            <Button onClick={() => exportToAsm(soundEffects, gameName)} size="sm" variant="outline">
+                                <Download className="w-4 h-4 mr-1" />
                                 Export
                             </Button>
                         </div>
@@ -173,86 +223,103 @@ const AtariSoundEditor: FC = () => {
                 </CardHeader>
             </Card>
 
-            <div className="space-y-4">
+            {/* Sound effects */}
+            <div className="space-y-3">
                 {soundEffects.map(effect => (
                     <Card key={effect.id}>
-                        <CardHeader>
+                        <CardHeader className="pb-2">
                             <div className="flex items-center gap-2">
                                 <Input
                                     value={effect.name}
                                     onChange={(e) => updateSoundEffectName(effect.id, e.target.value)}
-                                    className="text-xl font-semibold w-64"
+                                    className="font-semibold flex-1"
                                 />
                                 <Button
                                     onClick={() => playSample(effect.name)}
                                     size="sm"
-                                    disabled={!initialized}
+                                    disabled={!initialized || loading}
+                                    title={!initialized ? 'Sound engine not ready' : `Play "${effect.name}"`}
                                 >
+                                    <Play className="w-4 h-4 mr-1" />
                                     Play
                                 </Button>
                                 <Button
-                                    variant="destructive"
+                                    variant="ghost"
                                     size="sm"
                                     onClick={() => deleteSoundEffect(effect.id)}
+                                    className="text-muted-foreground hover:text-destructive"
+                                    title="Delete sound effect"
                                 >
                                     <Trash2 className="w-4 h-4" />
                                 </Button>
                             </div>
+                            <p className="text-xs text-muted-foreground">
+                                {effect.tones.length === 0
+                                    ? 'No tones — add one below'
+                                    : `${effect.tones.length} tone${effect.tones.length !== 1 ? 's' : ''}`}
+                            </p>
                         </CardHeader>
-                        <CardContent>
-                            <div className="space-y-4">
-                                {effect.tones.map(tone => (
-                                    <div key={tone.id} className="grid grid-cols-4 gap-4 items-center">
-                                        <div>
-                                            <Label>Control (0-15)</Label>
-                                            <Input
-                                                type="number"
-                                                min="0"
-                                                max="15"
+
+                        <CardContent className="pt-0">
+                            <div className="space-y-0 divide-y">
+                                {effect.tones.map((tone, index) => (
+                                    <div key={tone.id} className="py-3 flex items-start gap-3">
+                                        {/* Tone index */}
+                                        <span className="text-xs text-muted-foreground font-mono w-6 shrink-0 mt-1 text-right">
+                                            {index + 1}
+                                        </span>
+
+                                        {/* Sliders */}
+                                        <div className="grid grid-cols-3 gap-4 flex-1 min-w-0">
+                                            <SliderField
+                                                label="Control"
+                                                min={0}
+                                                max={15}
                                                 value={tone.control}
-                                                onChange={(e) => updateTone(effect.id, tone.id, 'control', parseInt(e.target.value, 10))}
+                                                onChange={(v) => updateTone(effect.id, tone.id, 'control', v)}
                                             />
-                                        </div>
-                                        <div>
-                                            <Label>Volume (0-15)</Label>
-                                            <Input
-                                                type="number"
-                                                min="0"
-                                                max="15"
+                                            <SliderField
+                                                label="Volume"
+                                                min={0}
+                                                max={15}
                                                 value={tone.volume}
-                                                onChange={(e) => updateTone(effect.id, tone.id, 'volume', parseInt(e.target.value, 10))}
+                                                onChange={(v) => updateTone(effect.id, tone.id, 'volume', v)}
                                             />
-                                        </div>
-                                        <div>
-                                            <Label>Frequency (0-31)</Label>
-                                            <Input
-                                                type="number"
-                                                min="0"
-                                                max="31"
+                                            <SliderField
+                                                label="Frequency"
+                                                min={0}
+                                                max={31}
                                                 value={tone.frequency}
-                                                onChange={(e) => updateTone(effect.id, tone.id, 'frequency', parseInt(e.target.value, 10))}
+                                                onChange={(v) => updateTone(effect.id, tone.id, 'frequency', v)}
                                             />
                                         </div>
-                                        <div className="flex items-end">
-                                            <Button
-                                                variant="destructive"
-                                                size="sm"
-                                                onClick={() => deleteTone(effect.id, tone.id)}
-                                            >
-                                                <Trash2 className="w-4 h-4" />
-                                            </Button>
-                                        </div>
+
+                                        {/* Delete tone */}
+                                        <button
+                                            onClick={() => deleteTone(effect.id, tone.id)}
+                                            className="mt-1 shrink-0 text-muted-foreground hover:text-destructive transition-colors"
+                                            title="Remove tone"
+                                        >
+                                            <Trash2 className="w-3.5 h-3.5" />
+                                        </button>
                                     </div>
                                 ))}
-                                <Button onClick={() => addTone(effect.id)} size="sm" className="w-full">
-                                    <Plus className="w-4 h-4 mr-2" />
-                                    Add Tone
-                                </Button>
                             </div>
+
+                            <Button
+                                onClick={() => addTone(effect.id)}
+                                size="sm"
+                                variant="outline"
+                                className="w-full mt-2"
+                            >
+                                <Plus className="w-4 h-4 mr-1" />
+                                Add Tone
+                            </Button>
                         </CardContent>
                     </Card>
                 ))}
-                <Button onClick={addSoundEffect} className="w-full">
+
+                <Button onClick={addSoundEffect} className="w-full" variant="outline">
                     <Plus className="w-4 h-4 mr-2" />
                     Add Sound Effect
                 </Button>
