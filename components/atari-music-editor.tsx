@@ -408,6 +408,11 @@ export default function AtariMusicEditor() {
     }
   }, [player, activeSong, playSpeed]);
 
+  // Keep master volume in sync with the Default Vol slider (0-15 → 0.0-1.0)
+  useEffect(() => {
+    player.setMasterVolume(defaultVolume / 15);
+  }, [player, defaultVolume]);
+
   // Stop pattern playback when the user switches to a different pattern
   useEffect(() => {
     if (player.playMode === 'pattern') {

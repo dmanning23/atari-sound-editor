@@ -9,13 +9,14 @@ function playToneStep(
   step: MusicStep | null,
   startTime: number,
   duration: number,
+  masterVol = 1,
 ) {
   if (!step || step.audv === 0) return;
 
   const noteEntry = findNote(step.audc, step.audf);
   if (!noteEntry) return;
 
-  const vol = step.audv / 15;
+  const vol = (step.audv / 15) * masterVol;
 
   if (noteEntry.isDrum) {
     playDrumStep(ctx, step, startTime, duration, vol);
@@ -67,7 +68,7 @@ function playDrumStep(
 
   if (audc === 8 && audf === 0) {
     // HiHat
-    playNoiseBurst(ctx, startTime, 0.04, vol * 0.25, 8000);
+    playNoiseBurst(ctx, startTime, 0.04, vol * 0.5, 4000);
     return;
   }
 
@@ -132,6 +133,7 @@ export interface AtariMusicPlayer {
   playPattern: (pattern: MusicPattern, tempo: number, speed: number) => void;
   playSong: (song: AtariSong, speed: number) => void;
   stop: () => void;
+  setMasterVolume: (vol: number) => void; // 0.0 – 1.0; applied as a multiplier at schedule time
 }
 
 const SCHEDULE_AHEAD = 0.15; // seconds to schedule ahead of audio playback
@@ -149,6 +151,7 @@ export function useAtariMusicPlayer(): AtariMusicPlayer {
   // Playback state (all mutable refs, safe to read from scheduler interval)
   const tempoRef = useRef(4);          // frames per step
   const speedRef = useRef(1);          // multiplier (0.25 – 2)
+  const masterVolRef = useRef(1);      // master volume multiplier (0.0 – 1.0)
   const isPlayingRef = useRef(false);
   const playStartTimeRef = useRef(0);  // AudioContext time when playback started
 
@@ -175,8 +178,9 @@ export function useAtariMusicPlayer(): AtariMusicPlayer {
       const step = schedStepRef.current;
 
       const dur = getStepDuration();
-      playToneStep(ctx, pat.voice0[step], nextStepTimeRef.current, dur);
-      playToneStep(ctx, pat.voice1[step], nextStepTimeRef.current, dur);
+      const mv = masterVolRef.current;
+      playToneStep(ctx, pat.voice0[step], nextStepTimeRef.current, dur, mv);
+      playToneStep(ctx, pat.voice1[step], nextStepTimeRef.current, dur, mv);
 
       nextStepTimeRef.current += dur;
       schedStepRef.current++;
@@ -272,6 +276,10 @@ export function useAtariMusicPlayer(): AtariMusicPlayer {
     [startPlayback],
   );
 
+  const setMasterVolume = useCallback((vol: number) => {
+    masterVolRef.current = Math.max(0, Math.min(1, vol));
+  }, []);
+
   const stop = useCallback(() => {
     isPlayingRef.current = false;
     if (schedulerRef.current) { clearInterval(schedulerRef.current); schedulerRef.current = null; }
@@ -292,5 +300,5 @@ export function useAtariMusicPlayer(): AtariMusicPlayer {
     };
   }, []);
 
-  return { isPlaying, playMode, playheadStep, playheadPatternId, playPattern, playSong, stop };
+  return { isPlaying, playMode, playheadStep, playheadPatternId, playPattern, playSong, stop, setMasterVolume };
 }
