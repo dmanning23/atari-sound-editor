@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { MusicPattern, MusicStep } from '@/types/music';
+import { AtariSong, MusicPattern, MusicStep } from '@/types/music';
 import { findNote, getOscType, midiToHz } from './atariNoteTable';
 
 // ─── Audio helpers ────────────────────────────────────────────────────────────
@@ -29,7 +29,6 @@ function playToneStep(
   osc.type = getOscType(step.audc);
   osc.frequency.value = hz;
 
-  // Quick attack, hold, then cut slightly before next step to avoid clicks
   gain.gain.setValueAtTime(0, startTime);
   gain.gain.linearRampToValueAtTime(vol * 0.4, startTime + 0.005);
   gain.gain.setValueAtTime(vol * 0.4, startTime + duration * 0.85);
@@ -50,8 +49,8 @@ function playDrumStep(
 ) {
   const { audc, audf } = step;
 
-  // Kick: AUDC=15, freq=30
   if (audc === 15 && audf === 30) {
+    // Kick
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = 'sine';
@@ -66,19 +65,19 @@ function playDrumStep(
     return;
   }
 
-  // HiHat: AUDC=8, freq=0
   if (audc === 8 && audf === 0) {
+    // HiHat
     playNoiseBurst(ctx, startTime, 0.04, vol * 0.25, 8000);
     return;
   }
 
-  // Snare (Noise): AUDC=8
   if (audc === 8) {
+    // Snare (Noise)
     playNoiseBurst(ctx, startTime, Math.min(0.1, duration), vol * 0.5, 2000);
     return;
   }
 
-  // Buzz snare / Buzz kick: AUDC=15
+  // Buzz snare / other buzz
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
   osc.type = 'sawtooth';
@@ -123,103 +122,175 @@ function playNoiseBurst(
 
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
+export type PlayMode = 'pattern' | 'song';
+
 export interface AtariMusicPlayer {
   isPlaying: boolean;
-  playheadStep: number; // -1 = stopped
-  playPattern: (pattern: MusicPattern, tempo: number) => void;
+  playMode: PlayMode | null;
+  playheadStep: number;             // current step within current pattern (-1 = stopped)
+  playheadPatternId: string | null; // ID of pattern currently being played
+  playPattern: (pattern: MusicPattern, tempo: number, speed: number) => void;
+  playSong: (song: AtariSong, speed: number) => void;
   stop: () => void;
 }
 
+const SCHEDULE_AHEAD = 0.15; // seconds to schedule ahead of audio playback
+
 export function useAtariMusicPlayer(): AtariMusicPlayer {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [playMode, setPlayMode] = useState<PlayMode | null>(null);
   const [playheadStep, setPlayheadStep] = useState(-1);
+  const [playheadPatternId, setPlayheadPatternId] = useState<string | null>(null);
 
   const audioCtxRef = useRef<AudioContext | null>(null);
-  // Scheduler interval (runs every ~25ms to schedule notes ahead)
   const schedulerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  // UI interval (runs every step to update playhead display)
   const uiIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const nextStepTimeRef = useRef(0);
-  const currentStepRef = useRef(0);
-  const patternRef = useRef<MusicPattern | null>(null);
-  const tempoRef = useRef(4);
+  // Playback state (all mutable refs, safe to read from scheduler interval)
+  const tempoRef = useRef(4);          // frames per step
+  const speedRef = useRef(1);          // multiplier (0.25 – 2)
   const isPlayingRef = useRef(false);
+  const playStartTimeRef = useRef(0);  // AudioContext time when playback started
 
-  const SCHEDULE_AHEAD = 0.15; // schedule 150ms ahead of audio time
+  // Arrangement: an ordered list of patterns to play through
+  const arrangementRef = useRef<MusicPattern[]>([]);
 
+  // Scheduling pointers (always ahead of audio clock by SCHEDULE_AHEAD)
+  const schedPatIdxRef = useRef(0);   // which pattern in arrangement we're scheduling
+  const schedStepRef = useRef(0);     // which step within that pattern
+  const nextStepTimeRef = useRef(0);  // AudioContext time of next step to schedule
+
+  // ── Step duration helper ──────────────────────────────────────────────────
+  const getStepDuration = () => tempoRef.current / 60 / speedRef.current;
+
+  // ── Scheduler ────────────────────────────────────────────────────────────
   const scheduleAhead = useCallback(() => {
     const ctx = audioCtxRef.current;
-    const pattern = patternRef.current;
-    if (!ctx || !pattern || !isPlayingRef.current) return;
-
-    const stepDuration = tempoRef.current / 60;
+    const patterns = arrangementRef.current;
+    if (!ctx || patterns.length === 0 || !isPlayingRef.current) return;
 
     while (nextStepTimeRef.current < ctx.currentTime + SCHEDULE_AHEAD) {
-      const step = currentStepRef.current % pattern.length;
-      playToneStep(ctx, pattern.voice0[step], nextStepTimeRef.current, stepDuration);
-      playToneStep(ctx, pattern.voice1[step], nextStepTimeRef.current, stepDuration);
-      nextStepTimeRef.current += stepDuration;
-      currentStepRef.current++;
+      const patIdx = schedPatIdxRef.current;
+      const pat = patterns[patIdx];
+      const step = schedStepRef.current;
+
+      const dur = getStepDuration();
+      playToneStep(ctx, pat.voice0[step], nextStepTimeRef.current, dur);
+      playToneStep(ctx, pat.voice1[step], nextStepTimeRef.current, dur);
+
+      nextStepTimeRef.current += dur;
+      schedStepRef.current++;
+
+      if (schedStepRef.current >= pat.length) {
+        schedStepRef.current = 0;
+        schedPatIdxRef.current = (patIdx + 1) % patterns.length;
+      }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const stopIntervals = useCallback(() => {
+  // ── UI playhead (runs every 16ms; derives position from AudioContext clock) ─
+  const updatePlayhead = useCallback(() => {
+    const ctx = audioCtxRef.current;
+    const patterns = arrangementRef.current;
+    if (!ctx || patterns.length === 0 || !isPlayingRef.current) return;
+
+    const elapsed = Math.max(0, ctx.currentTime - playStartTimeRef.current);
+    const stepDur = getStepDuration();
+    const totalStepsElapsed = Math.floor(elapsed / stepDur);
+
+    // Total steps in one full arrangement loop
+    const loopLen = patterns.reduce((s, p) => s + p.length, 0);
+    let posInLoop = totalStepsElapsed % loopLen;
+
+    // Walk the arrangement to find which pattern + step
+    let displayPatIdx = 0;
+    for (let i = 0; i < patterns.length; i++) {
+      if (posInLoop < patterns[i].length) {
+        displayPatIdx = i;
+        break;
+      }
+      posInLoop -= patterns[i].length;
+    }
+
+    setPlayheadStep(posInLoop);
+    setPlayheadPatternId(patterns[displayPatIdx]?.id ?? null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // ── Internal start ────────────────────────────────────────────────────────
+  const startPlayback = useCallback((
+    patterns: MusicPattern[],
+    tempo: number,
+    speed: number,
+    mode: PlayMode,
+  ) => {
+    if (!audioCtxRef.current) audioCtxRef.current = new AudioContext();
+    const ctx = audioCtxRef.current;
+    if (ctx.state === 'suspended') ctx.resume();
+
+    // Clear any running intervals
     if (schedulerRef.current) { clearInterval(schedulerRef.current); schedulerRef.current = null; }
     if (uiIntervalRef.current) { clearInterval(uiIntervalRef.current); uiIntervalRef.current = null; }
-  }, []);
+
+    arrangementRef.current = patterns;
+    schedPatIdxRef.current = 0;
+    schedStepRef.current = 0;
+    tempoRef.current = tempo;
+    speedRef.current = speed;
+    const startAt = ctx.currentTime + 0.05;
+    nextStepTimeRef.current = startAt;
+    playStartTimeRef.current = startAt;
+    isPlayingRef.current = true;
+
+    setIsPlaying(true);
+    setPlayMode(mode);
+    setPlayheadStep(0);
+    setPlayheadPatternId(patterns[0]?.id ?? null);
+
+    schedulerRef.current = setInterval(scheduleAhead, 25);
+    uiIntervalRef.current = setInterval(updatePlayhead, 16);
+  }, [scheduleAhead, updatePlayhead]);
+
+  // ── Public API ────────────────────────────────────────────────────────────
+  const playPattern = useCallback(
+    (pattern: MusicPattern, tempo: number, speed: number) => {
+      startPlayback([pattern], tempo, speed, 'pattern');
+    },
+    [startPlayback],
+  );
+
+  const playSong = useCallback(
+    (song: AtariSong, speed: number) => {
+      const byId = new Map(song.patterns.map(p => [p.id, p]));
+      const patterns = song.arrangement
+        .map(id => byId.get(id))
+        .filter((p): p is MusicPattern => !!p);
+      if (patterns.length === 0) return;
+      startPlayback(patterns, song.tempo, speed, 'song');
+    },
+    [startPlayback],
+  );
 
   const stop = useCallback(() => {
     isPlayingRef.current = false;
-    stopIntervals();
+    if (schedulerRef.current) { clearInterval(schedulerRef.current); schedulerRef.current = null; }
+    if (uiIntervalRef.current) { clearInterval(uiIntervalRef.current); uiIntervalRef.current = null; }
     setIsPlaying(false);
+    setPlayMode(null);
     setPlayheadStep(-1);
-  }, [stopIntervals]);
-
-  const playPattern = useCallback(
-    (pattern: MusicPattern, tempo: number) => {
-      // Resume or create AudioContext (browser autoplay policy)
-      if (!audioCtxRef.current) {
-        audioCtxRef.current = new AudioContext();
-      }
-      const ctx = audioCtxRef.current;
-      if (ctx.state === 'suspended') ctx.resume();
-
-      stopIntervals();
-
-      patternRef.current = pattern;
-      tempoRef.current = tempo;
-      currentStepRef.current = 0;
-      nextStepTimeRef.current = ctx.currentTime + 0.05;
-      isPlayingRef.current = true;
-
-      setIsPlaying(true);
-      setPlayheadStep(0);
-
-      // Schedule notes ahead of playback
-      schedulerRef.current = setInterval(scheduleAhead, 25);
-
-      // Update playhead display each step
-      const stepMs = (tempo / 60) * 1000;
-      uiIntervalRef.current = setInterval(() => {
-        if (!isPlayingRef.current || !patternRef.current) return;
-        const step =
-          Math.floor(currentStepRef.current - SCHEDULE_AHEAD / (tempo / 60)) %
-          patternRef.current.length;
-        setPlayheadStep(Math.max(0, step));
-      }, stepMs);
-    },
-    [scheduleAhead, stopIntervals],
-  );
+    setPlayheadPatternId(null);
+  }, []);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
       isPlayingRef.current = false;
-      stopIntervals();
+      if (schedulerRef.current) clearInterval(schedulerRef.current);
+      if (uiIntervalRef.current) clearInterval(uiIntervalRef.current);
       audioCtxRef.current?.close();
     };
-  }, [stopIntervals]);
+  }, []);
 
-  return { isPlaying, playheadStep, playPattern, stop };
+  return { isPlaying, playMode, playheadStep, playheadPatternId, playPattern, playSong, stop };
 }

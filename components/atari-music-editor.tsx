@@ -188,6 +188,7 @@ export default function AtariMusicEditor() {
   const [activePatternId, setActivePatternId] = useState(INITIAL_PATTERN_ID);
   const [activeVoice, setActiveVoice] = useState<0 | 1>(0);
   const [defaultVolume, setDefaultVolume] = useState(DEFAULT_VOLUME);
+  const [playSpeed, setPlaySpeed] = useState(1);
   const [selectedCell, setSelectedCell] = useState<{
     noteId: string;
     stepIndex: number;
@@ -391,17 +392,25 @@ export default function AtariMusicEditor() {
 
   // ── Playback ────────────────────────────────────────────────────────────
 
-  const handlePlay = useCallback(() => {
-    if (player.isPlaying) {
+  const handlePlayPattern = useCallback(() => {
+    if (player.playMode === 'pattern') {
       player.stop();
     } else {
-      player.playPattern(activePattern, activeSong.tempo);
+      player.playPattern(activePattern, activeSong.tempo, playSpeed);
     }
-  }, [player, activePattern, activeSong.tempo]);
+  }, [player, activePattern, activeSong.tempo, playSpeed]);
 
-  // Keep player in sync when pattern changes while playing
+  const handlePlaySong = useCallback(() => {
+    if (player.playMode === 'song') {
+      player.stop();
+    } else {
+      player.playSong(activeSong, playSpeed);
+    }
+  }, [player, activeSong, playSpeed]);
+
+  // Stop pattern playback when the user switches to a different pattern
   useEffect(() => {
-    if (player.isPlaying) {
+    if (player.playMode === 'pattern') {
       player.stop();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -492,12 +501,36 @@ export default function AtariMusicEditor() {
 
           {/* Playback */}
           <DarkButton
-            onClick={handlePlay}
-            title={player.isPlaying ? 'Stop' : 'Play pattern'}
-            className="w-8"
+            onClick={handlePlayPattern}
+            active={player.playMode === 'pattern'}
+            title={player.playMode === 'pattern' ? 'Stop' : 'Play pattern'}
+            className="w-16"
           >
-            {player.isPlaying ? '■' : '▶'}
+            {player.playMode === 'pattern' ? '■ Pat' : '▶ Pat'}
           </DarkButton>
+          <DarkButton
+            onClick={handlePlaySong}
+            active={player.playMode === 'song'}
+            title={player.playMode === 'song' ? 'Stop' : 'Play full song'}
+            className="w-16"
+          >
+            {player.playMode === 'song' ? '■ Song' : '▶ Song'}
+          </DarkButton>
+
+          {/* Speed */}
+          <select
+            value={playSpeed}
+            onChange={e => setPlaySpeed(Number(e.target.value))}
+            className="bg-gray-800 border border-gray-600 rounded px-1 py-0.5 text-gray-100 text-xs"
+            title="Playback speed"
+          >
+            <option value={0.25}>¼×</option>
+            <option value={0.5}>½×</option>
+            <option value={0.75}>¾×</option>
+            <option value={1}>1×</option>
+            <option value={1.5}>1½×</option>
+            <option value={2}>2×</option>
+          </select>
 
           <div className="w-px h-5 bg-gray-700 mx-1" />
 
@@ -605,6 +638,7 @@ export default function AtariMusicEditor() {
           <BottomPanel
             song={activeSong}
             activePatternId={activePatternId}
+            playheadPatternId={player.playheadPatternId}
             onSelectPattern={setActivePatternId}
             onAddPattern={addPattern}
             onDeletePattern={deletePattern}
@@ -850,6 +884,7 @@ function PropField({
 interface BottomPanelProps {
   song: AtariSong;
   activePatternId: string;
+  playheadPatternId: string | null;
   onSelectPattern: (id: string) => void;
   onAddPattern: () => void;
   onDeletePattern: (id: string) => void;
@@ -863,6 +898,7 @@ interface BottomPanelProps {
 function BottomPanel({
   song,
   activePatternId,
+  playheadPatternId,
   onSelectPattern,
   onAddPattern,
   onDeletePattern,
@@ -920,9 +956,17 @@ function BottomPanel({
         <span className="text-gray-400 text-xs mr-1">Song:</span>
         {song.arrangement.map((pid, idx) => {
           const pat = song.patterns.find(p => p.id === pid);
+          const isPlayhead = pid === playheadPatternId;
           return (
             <div key={`${pid}-${idx}`} className="flex items-center gap-0.5">
-              <span className="px-2 py-0.5 rounded text-xs bg-gray-700 border border-gray-600 text-gray-200">
+              <span
+                className={cn(
+                  'px-2 py-0.5 rounded text-xs border transition-colors',
+                  isPlayhead
+                    ? 'bg-red-900 border-red-600 text-red-200'
+                    : 'bg-gray-700 border-gray-600 text-gray-200',
+                )}
+              >
                 {pat?.name ?? '?'}
               </span>
               <button
