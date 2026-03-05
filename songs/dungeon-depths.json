@@ -1,0 +1,242 @@
+{
+  "id": "dungeon-depths-001",
+  "name": "Dungeon Depths",
+  "artist": "Zelda Tribute",
+  "tempo": 6,
+  "patterns": [
+    {
+      "id": "dd-p1",
+      "name": "Dark Corridors",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        null,
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 9
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        null,
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 9
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 21,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 8
+        }
+      ]
+    },
+    {
+      "id": "dd-p2",
+      "name": "Stone Chamber",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 21,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 21,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 10
+        },
+        null
+      ]
+    }
+  ],
+  "arrangement": [
+    "dd-p1",
+    "dd-p1",
+    "dd-p2",
+    "dd-p1",
+    "dd-p2",
+    "dd-p1"
+  ]
+}

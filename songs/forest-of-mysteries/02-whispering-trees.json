@@ -1,0 +1,252 @@
+{
+  "id": "forest-ambient-001",
+  "name": "Whispering Trees",
+  "artist": "Forest of Mysteries OST",
+  "tempo": 9,
+  "patterns": [
+    {
+      "id": "wa-p1",
+      "name": "Night Air",
+      "length": 16,
+      "voice0": [
+        null,
+        null,
+        {
+          "audc": 1,
+          "audf": 10,
+          "audv": 5
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 1,
+          "audf": 12,
+          "audv": 5
+        },
+        null,
+        null,
+        null
+      ],
+      "voice1": [
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": "wa-p2",
+      "name": "Rustling",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 1,
+          "audf": 30,
+          "audv": 5
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 1,
+          "audf": 10,
+          "audv": 5
+        }
+      ],
+      "voice1": [
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 12,
+          "audf": 21,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 12,
+          "audf": 28,
+          "audv": 6
+        },
+        null
+      ]
+    },
+    {
+      "id": "wa-p3",
+      "name": "Something Moves",
+      "length": 16,
+      "voice0": [
+        null,
+        null,
+        null,
+        {
+          "audc": 1,
+          "audf": 12,
+          "audv": 5
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 1,
+          "audf": 21,
+          "audv": 5
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "voice1": [
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 12,
+          "audf": 21,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 6
+        },
+        null,
+        null
+      ]
+    },
+    {
+      "id": "wa-p4",
+      "name": "Branches Creak",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 1,
+          "audf": 10,
+          "audv": 5
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 1,
+          "audf": 12,
+          "audv": 5
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 1,
+          "audf": 30,
+          "audv": 4
+        }
+      ],
+      "voice1": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 4,
+          "audf": 28,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    }
+  ],
+  "arrangement": [
+    "wa-p1",
+    "wa-p2",
+    "wa-p1",
+    "wa-p3",
+    "wa-p2",
+    "wa-p4",
+    "wa-p1",
+    "wa-p3",
+    "wa-p2",
+    "wa-p1"
+  ]
+}

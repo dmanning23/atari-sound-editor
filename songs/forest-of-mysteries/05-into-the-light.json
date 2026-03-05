@@ -1,0 +1,422 @@
+{
+  "id": "forest-win-001",
+  "name": "Into the Light",
+  "artist": "Forest of Mysteries OST",
+  "tempo": 4,
+  "patterns": [
+    {
+      "id": "il-p1",
+      "name": "You Made It",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 26,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 10
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 10
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 10
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 10
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        null
+      ]
+    },
+    {
+      "id": "il-p2",
+      "name": "Celebration",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 10
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 10
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 10
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 10
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 10
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 10
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 11
+        },
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 11
+        },
+        null
+      ]
+    },
+    {
+      "id": "il-p3",
+      "name": "Triumphant Flourish",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 6,
+          "audf": 7,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 10
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 26,
+          "audv": 10
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 11
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 21,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 12
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 12
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 12
+        }
+      ]
+    }
+  ],
+  "arrangement": [
+    "il-p1",
+    "il-p1",
+    "il-p2",
+    "il-p1",
+    "il-p2",
+    "il-p3",
+    "il-p2",
+    "il-p3",
+    "il-p1"
+  ]
+}

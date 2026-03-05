@@ -1,0 +1,394 @@
+{
+  "id": "hyrule-overture-001",
+  "name": "Hyrule Overture",
+  "artist": "Zelda Tribute",
+  "tempo": 4,
+  "patterns": [
+    {
+      "id": "ho-p1",
+      "name": "Open Fields",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 26,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 9
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 9
+        }
+      ]
+    },
+    {
+      "id": "ho-p2",
+      "name": "Rolling Hills",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 7,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 9
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        null
+      ]
+    },
+    {
+      "id": "ho-p3",
+      "name": "Hero's Return",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 9
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 10
+        },
+        null
+      ]
+    }
+  ],
+  "arrangement": [
+    "ho-p1",
+    "ho-p1",
+    "ho-p2",
+    "ho-p1",
+    "ho-p3",
+    "ho-p1",
+    "ho-p2",
+    "ho-p3",
+    "ho-p1"
+  ]
+}

@@ -1,0 +1,290 @@
+{
+  "id": "forest-title-001",
+  "name": "Shadows Gather",
+  "artist": "Forest of Mysteries OST",
+  "tempo": 7,
+  "patterns": [
+    {
+      "id": "ft-p1",
+      "name": "Into Darkness",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 1,
+          "audf": 10,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 1,
+          "audf": 12,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 1,
+          "audf": 10,
+          "audv": 7
+        },
+        null,
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 8
+        },
+        {
+          "audc": 1,
+          "audf": 12,
+          "audv": 7
+        },
+        null,
+        null,
+        null
+      ],
+      "voice1": [
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 28,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 28,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 21,
+          "audv": 9
+        },
+        null,
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 8
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 7
+        }
+      ]
+    },
+    {
+      "id": "ft-p2",
+      "name": "Omen",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 1,
+          "audf": 12,
+          "audv": 7
+        },
+        null,
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 8
+        },
+        {
+          "audc": 1,
+          "audf": 30,
+          "audv": 6
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 1,
+          "audf": 12,
+          "audv": 7
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 8
+        },
+        null,
+        {
+          "audc": 1,
+          "audf": 10,
+          "audv": 7
+        },
+        null,
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 7
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 12,
+          "audf": 21,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 9
+        },
+        null,
+        null,
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 9
+        },
+        {
+          "audc": 12,
+          "audf": 28,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 9
+        },
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": "ft-p3",
+      "name": "Forest Beckons",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 1,
+          "audf": 10,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 1,
+          "audf": 12,
+          "audv": 6
+        },
+        null,
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 8
+        },
+        null,
+        {
+          "audc": 1,
+          "audf": 10,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 7
+        }
+      ],
+      "voice1": [
+        null,
+        {
+          "audc": 4,
+          "audf": 28,
+          "audv": 9
+        },
+        null,
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 9
+        },
+        null,
+        null,
+        {
+          "audc": 12,
+          "audf": 28,
+          "audv": 9
+        },
+        null,
+        null,
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 21,
+          "audv": 8
+        },
+        null,
+        null,
+        null
+      ]
+    }
+  ],
+  "arrangement": [
+    "ft-p1",
+    "ft-p1",
+    "ft-p2",
+    "ft-p1",
+    "ft-p3",
+    "ft-p1",
+    "ft-p2",
+    "ft-p3",
+    "ft-p1"
+  ]
+}

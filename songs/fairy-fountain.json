@@ -1,0 +1,289 @@
+{
+  "id": "fairy-fountain-001",
+  "name": "Fairy Fountain",
+  "artist": "Zelda Tribute",
+  "tempo": 5,
+  "patterns": [
+    {
+      "id": "ff-p1",
+      "name": "Moonlit Lake",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 6,
+          "audf": 7,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 7
+        },
+        null,
+        null,
+        null
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 9
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 9
+        },
+        null,
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 9
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 9
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 8
+        },
+        null
+      ]
+    },
+    {
+      "id": "ff-p2",
+      "name": "Fairy Dance",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 6,
+          "audf": 5,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 6,
+          "audf": 7,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 6,
+          "audf": 7,
+          "audv": 7
+        },
+        null,
+        null,
+        null
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 9
+        },
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 8
+        }
+      ]
+    },
+    {
+      "id": "ff-p3",
+      "name": "Lullaby Close",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 7
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 6
+        },
+        null,
+        null,
+        null,
+        {
+          "audc": 6,
+          "audf": 7,
+          "audv": 6
+        },
+        null,
+        null,
+        null
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 8
+        },
+        null,
+        null,
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 8
+        },
+        null,
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 7
+        },
+        null
+      ]
+    }
+  ],
+  "arrangement": [
+    "ff-p1",
+    "ff-p1",
+    "ff-p2",
+    "ff-p1",
+    "ff-p3",
+    "ff-p1",
+    "ff-p2",
+    "ff-p3"
+  ]
+}
