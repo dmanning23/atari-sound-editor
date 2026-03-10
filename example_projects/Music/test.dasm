@@ -28,6 +28,7 @@ MUS_FRAME .byte;    - frame countdown (1 byte)
 MUS_STEP .byte;     - step within pattern (1 byte)
 MUS_PAT_IDX .byte;  - arrangement index (1 byte)
 MUS_PLAYING .byte;  - 0=stopped, 1=playing (1 byte)
+MUS_ARR_OFF .byte;  - saved arrangement byte offset (1 byte)
 MUS_PTR .word;      - temp zero-page pointer (2 bytes)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
