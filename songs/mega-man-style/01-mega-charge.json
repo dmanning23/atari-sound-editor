@@ -1,0 +1,591 @@
+{
+  "id": "mm-opening-001",
+  "name": "Mega Charge",
+  "artist": "Mega Man Style OST",
+  "tempo": 3,
+  "patterns": [
+    {
+      "id": "op-p1",
+      "name": "Hero Rises",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 26,
+          "audv": 10
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 26,
+          "audv": 10
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 26,
+          "audv": 10
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 26,
+          "audv": 10
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 10
+        },
+        null
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 21,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        null
+      ]
+    },
+    {
+      "id": "op-p2",
+      "name": "March Forward",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 26,
+          "audv": 10
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 10
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 26,
+          "audv": 10
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 10
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 21,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        null
+      ]
+    },
+    {
+      "id": "op-p3",
+      "name": "Bridge",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 9
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 10
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 9
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 10
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 21,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 11
+        },
+        {
+          "audc": 12,
+          "audf": 12,
+          "audv": 10
+        },
+        null
+      ]
+    },
+    {
+      "id": "op-p4",
+      "name": "Charge Up",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 10
+        },
+        {
+          "audc": 6,
+          "audf": 26,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 11
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 10
+        },
+        {
+          "audc": 6,
+          "audf": 26,
+          "audv": 10
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 8,
+          "audf": 0,
+          "audv": 8
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 11
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 12,
+          "audv": 12
+        },
+        null,
+        null,
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 21,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 21,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 11
+        },
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        null
+      ]
+    }
+  ],
+  "arrangement": [
+    "op-p1",
+    "op-p2",
+    "op-p2",
+    "op-p3",
+    "op-p2",
+    "op-p2",
+    "op-p4",
+    "op-p3",
+    "op-p2"
+  ]
+}

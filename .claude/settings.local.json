@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc --noEmit)",
+      "Bash(git add components/atari-sound-editor.tsx utils/atariSoundService.ts utils/useAtariSoundService.ts .vscode/launch.json)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(git add components/atari-sound-editor.tsx styles/globals.css)",
+      "Bash(git add components/atari-sound-editor.tsx)",
+      "Bash(git add README.md)",
+      "Bash(npm show next versions --json)",
+      "Bash(node -e \"const v=require\\(''fs''\\).readFileSync\\(''/dev/stdin'',''utf8''\\); const arr=JSON.parse\\(v\\); console.log\\(arr.slice\\(-10\\).join\\(''\\\\n''\\)\\)\")",
+      "Bash(npm show next dist-tags --json)",
+      "Bash(npm install next@15.3.9 eslint-config-next@15.3.9)",
+      "Bash(npx next build)",
+      "Bash(git add package.json package-lock.json)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npm run build)",
+      "Bash(git add pages/index.tsx tsconfig.json components/atari-music-editor.tsx types/music.ts utils/atariMusicExporter.ts utils/atariNoteTable.ts utils/useAtariMusicPlayer.ts)",
+      "Bash(git add CLAUDE.md)",
+      "Bash(lsof -i :3000)",
+      "Bash(lsof -i :3000 -sTCP:LISTEN)",
+      "Bash(git add components/atari-music-editor.tsx utils/useAtariMusicPlayer.ts)"
+    ]
+  }
+}

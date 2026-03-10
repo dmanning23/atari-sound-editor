@@ -1,0 +1,378 @@
+{
+  "id": "mm-frozen-001",
+  "name": "Frozen Fortress",
+  "artist": "Mega Man Style OST",
+  "tempo": 4,
+  "patterns": [
+    {
+      "id": "ff-p1",
+      "name": "Blizzard",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 9
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 28,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 28,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 10
+        },
+        null
+      ]
+    },
+    {
+      "id": "ff-p2",
+      "name": "Ice Cave",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 9
+        }
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 28,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        null
+      ]
+    },
+    {
+      "id": "ff-p3",
+      "name": "Permafrost",
+      "length": 16,
+      "voice0": [
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        null,
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 8,
+          "audv": 9
+        },
+        {
+          "audc": 6,
+          "audf": 9,
+          "audv": 9
+        },
+        null,
+        {
+          "audc": 15,
+          "audf": 30,
+          "audv": 12
+        },
+        {
+          "audc": 6,
+          "audf": 11,
+          "audv": 9
+        },
+        {
+          "audc": 15,
+          "audf": 6,
+          "audv": 10
+        },
+        null
+      ],
+      "voice1": [
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 11
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 30,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 21,
+          "audv": 11
+        },
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 28,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 4,
+          "audf": 25,
+          "audv": 10
+        },
+        {
+          "audc": 4,
+          "audf": 22,
+          "audv": 10
+        },
+        null,
+        {
+          "audc": 12,
+          "audf": 21,
+          "audv": 10
+        },
+        {
+          "audc": 12,
+          "audf": 22,
+          "audv": 10
+        },
+        null
+      ]
+    }
+  ],
+  "arrangement": [
+    "ff-p1",
+    "ff-p1",
+    "ff-p2",
+    "ff-p1",
+    "ff-p3",
+    "ff-p1",
+    "ff-p2",
+    "ff-p3",
+    "ff-p1"
+  ]
+}
