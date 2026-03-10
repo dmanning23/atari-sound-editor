@@ -308,6 +308,60 @@ def pat(id_, name, v0, v1):
 
 ---
 
+## Exporting to Assembly
+
+Click **Export** in the Music editor to download a `-music.asm` file. It contains:
+
+1. **Constants** — `MUSIC_TEMPO` and `MUSIC_NUM_PATS`
+2. **Pattern data** — for each pattern, four byte arrays: `v0_notes`, `v0_vols`, `v1_notes`, `v1_vols`
+3. **Arrangement table** — one 9-byte entry per arrangement slot:
+   - `.word` v0 notes pointer
+   - `.word` v0 volumes pointer
+   - `.word` v1 notes pointer
+   - `.word` v1 volumes pointer
+   - `.byte` pattern length
+4. **Music engine** — `MUSIC_INIT`, `MUSIC_UPDATE`, `MUSIC_STOP` routines
+
+### Note code format
+
+Each note in the byte arrays is packed as `[driverCode(3 bits)][frequency(5 bits)]`. `$00` is a rest.
+
+| Driver code | AUDC | Sound type |
+|-------------|------|-----------|
+| `000` | 4 | Square |
+| `001` | 6 | Bass |
+| `010` | 7 | Pitfall |
+| `011` | 8 | Noise |
+| `100` | 15 | Buzz |
+| `101` | 12 | Lead |
+| `110` | 1 | Saw |
+| `111` | 3 | Engine |
+
+### Zero-page variables required
+
+```asm
+MUS_FRAME    .byte   ; frame countdown per step
+MUS_STEP     .byte   ; step within current pattern
+MUS_PAT_IDX  .byte   ; index into the arrangement table
+MUS_PLAYING  .byte   ; 0 = stopped, 1 = playing
+MUS_ARR_OFF  .byte   ; saved arrangement byte offset (internal)
+MUS_PTR      .word   ; scratch pointer (2 bytes)
+```
+
+### Running alongside SoundEngine
+
+The music engine checks `SFX_LEFT` and `SFX_RIGHT` (from SoundEngine) before writing to each TIA channel. If a sound effect is playing on a channel, the music engine silently skips that channel for the current step and resumes automatically once the SFX finishes. No extra wiring required — just include both engines and call all four routines every frame:
+
+```asm
+    jsr MUSIC_UPDATE   ; during underscan
+    ; ...
+    jsr SFX_UPDATE     ; during overscan
+```
+
+See `example_projects/Music/test.dasm` for the full integration pattern.
+
+---
+
 ## Common Mistakes
 
 - **Wrong AUDF value**: Every AUDC has its own AUDF scale. An AUDF that works for Bass (AUDC=6) means something completely different for Square (AUDC=4). Always use the note table above.
