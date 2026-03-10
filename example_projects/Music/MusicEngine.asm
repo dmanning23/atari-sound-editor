@@ -10,6 +10,12 @@
 ;   MUS_PTR     - temp zero-page pointer (2 bytes)
 ; Required RAM addresses: AUDV0, AUDV1, AUDF0, AUDF1, AUDC0, AUDC1
 ; ============================================================
+; SoundEngine coexistence:
+;   Requires SFX_LEFT and SFX_RIGHT from SoundEngine.
+;   If SFX_LEFT != 0, music skips channel 0 (SFX owns it).
+;   If SFX_RIGHT != 0, music skips channel 1 (SFX owns it).
+;   Music resumes automatically once the SFX finishes.
+; ============================================================
 ;
 ; Arrangement entry layout (9 bytes each):
 ;   +0,+1  .word  voice 0 note codes ptr
@@ -71,6 +77,8 @@ MUSIC_UPDATE:
     ldy MUS_STEP
 
     ; ── Voice 0 note ─────────────────────────────
+    lda SFX_LEFT                       ; skip channel 0 if SFX owns it
+    bne .v1Note
     lda Shadows_Gather_arrangement,x   ; v0 notes ptr lo
     sta MUS_PTR
     lda Shadows_Gather_arrangement+1,x ; v0 notes ptr hi
@@ -103,6 +111,8 @@ MUSIC_UPDATE:
 
     ; ── Voice 1 note ─────────────────────────────
 .v1Note:
+    lda SFX_RIGHT                      ; skip channel 1 if SFX owns it
+    bne .advanceStep
     ldx MUS_ARR_OFF                    ; restore arrangement offset
     lda Shadows_Gather_arrangement+4,x ; v1 notes ptr lo
     sta MUS_PTR
