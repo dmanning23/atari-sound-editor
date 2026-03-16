@@ -20,7 +20,8 @@
       "Bash(git add CLAUDE.md)",
       "Bash(lsof -i :3000)",
       "Bash(lsof -i :3000 -sTCP:LISTEN)",
-      "Bash(git add components/atari-music-editor.tsx utils/useAtariMusicPlayer.ts)"
+      "Bash(git add components/atari-music-editor.tsx utils/useAtariMusicPlayer.ts)",
+      "Bash(git add:*)"
     ]
   }
 }

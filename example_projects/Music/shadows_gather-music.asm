@@ -53,16 +53,16 @@ Shadows_Gather_Omen_v1_vols:
 Shadows_Gather_Forest_Beckons_len = 16
 
 Shadows_Gather_Forest_Beckons_v0_notes:
-    .byte $CA, $00, $00, $00, $00, $CC, $00, $00, $9E, $00, $CA, $00, $00, $00, $00, $9E  ; voice 0 note codes
+    .byte $CA, $00, $00, $00, $CC, $00, $00, $00, $CA, $00, $00, $00, $CC, $00, $00, $9E  ; voice 0 note codes
 
 Shadows_Gather_Forest_Beckons_v0_vols:
-    .byte $07, $00, $00, $00, $00, $06, $00, $00, $08, $00, $07, $00, $00, $00, $00, $07  ; voice 0 volumes
+    .byte $07, $00, $00, $00, $0F, $00, $00, $00, $0F, $00, $00, $00, $0F, $00, $00, $07  ; voice 0 volumes
 
 Shadows_Gather_Forest_Beckons_v1_notes:
-    .byte $00, $1C, $00, $00, $B9, $00, $00, $BC, $00, $00, $BE, $00, $B5, $00, $00, $00  ; voice 1 note codes
+    .byte $AA, $00, $1C, $00, $B6, $00, $BC, $00, $BE, $00, $B5, $00, $00, $B9, $00, $BC  ; voice 1 note codes
 
 Shadows_Gather_Forest_Beckons_v1_vols:
-    .byte $00, $09, $00, $00, $09, $00, $00, $09, $00, $00, $09, $00, $08, $00, $00, $00  ; voice 1 volumes
+    .byte $0F, $00, $0F, $00, $0F, $00, $0F, $00, $0F, $00, $0F, $00, $00, $0F, $00, $0F  ; voice 1 volumes
 
 ; ============================================================
 ; ARRANGEMENT TABLE
@@ -124,6 +124,3 @@ Shadows_Gather_arrangement:
     .word Shadows_Gather_Into_Darkness_v1_notes
     .word Shadows_Gather_Into_Darkness_v1_vols
     .byte Shadows_Gather_Into_Darkness_len
-
-
-
