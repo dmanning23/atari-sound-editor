@@ -140,13 +140,13 @@ All valid `{ audc, audf }` pairs. Any other combination is **not** in the note t
 
 | tempo | Feel | Use for |
 |-------|------|---------|
-| 2     | Frantic | Jump scares, panic stings |
-| 3     | Very fast | Chase, action |
-| 4     | Brisk (~120 BPM) | Upbeat overworld, victory |
-| 5     | Medium | Adventure, moderate pace |
-| 6     | Slow | Dungeon, suspense |
-| 7     | Very slow | Title screens, dread |
-| 8–9   | Glacial | Ambient, atmosphere |
+| 3     | Frantic | Jump scares, panic stings |
+| 4     | Very fast | Chase, action |
+| 5     | Brisk (~120 BPM) | Upbeat overworld, victory |
+| 6     | Medium | Adventure, moderate pace |
+| 7     | Slow | Dungeon, suspense |
+| 8     | Very slow | Title screens, dread |
+| 9–10  | Glacial | Ambient, atmosphere |
 
 ---
 
