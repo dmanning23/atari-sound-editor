@@ -232,7 +232,7 @@ Single kick every 8 steps at tempo=7 becomes a slow heartbeat.
 ## Song-Type Recipes
 
 ### Title / Menu
-- Tempo: 7–8
+- Tempo: 8-9
 - No drums, or single isolated kick stabs (never rhythmic)
 - Saw drone in voice0 at low volume (audv 5–7)
 - Lead melody in voice1 with long rests between phrases
@@ -240,7 +240,7 @@ Single kick every 8 steps at tempo=7 becomes a slow heartbeat.
 - 3+ patterns; arrangement should be long so it doesn't feel loopy
 
 ### Ambient / Exploration
-- Tempo: 8–10
+- Tempo: 9-11
 - No drums at all
 - Very sparse — 3–4 notes per 16-step pattern, rest is silence
 - Saw texture in voice0 at audv 4–6
@@ -248,7 +248,7 @@ Single kick every 8 steps at tempo=7 becomes a slow heartbeat.
 - Keep audv low throughout (7 max)
 
 ### Chase / Action
-- Tempo: 3–4
+- Tempo: 4-5
 - Relentless kick every 4 steps (or even every 2 for maximum urgency)
 - Snare on off-beats
 - Melody uses fast repeated notes or chromatic runs (E5/F5 half-step is stressful)
@@ -257,7 +257,7 @@ Single kick every 8 steps at tempo=7 becomes a slow heartbeat.
 - Long arrangement (8–10 entries) so it doesn't feel repetitive under pressure
 
 ### Jump Scare / Sting
-- Tempo: 2
+- Tempo: 3
 - Pattern length: 8 steps
 - P1: All-channels hit simultaneously at audv 13–15, then decay rapidly over 4–5 steps
   - voice1: high Square note (F6 or D6) at max volume, decaying
@@ -266,7 +266,7 @@ Single kick every 8 steps at tempo=7 becomes a slow heartbeat.
 - Arrangement: [p1, p2, p2, p2] — stab once, hold the silence
 
 ### Victory / Win
-- Tempo: 4–5
+- Tempo: 5-6
 - Bright Square melody in upper register (D5, E5 range)
 - D pentatonic (D5, E5, B4, G4, A3) is reliably cheerful
 - Standard kick/snare groove; add HiHat for extra energy
@@ -274,7 +274,7 @@ Single kick every 8 steps at tempo=7 becomes a slow heartbeat.
 - Arrangement climbs in intensity: intro → main → celebration → flourish → main
 
 ### Dungeon / Puzzle
-- Tempo: 6
+- Tempo: 7
 - Minor key: A minor (A3, G3, E3, C5) or E minor (E3, G3, B4)
 - Sparse bass on downbeats; kick on beats 3 and 4 only (delayed, anxious feel)
 - Occasional tritone stab (Bb3 against E3/A3) for dissonance
