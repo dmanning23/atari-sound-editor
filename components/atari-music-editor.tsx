@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 import { AtariSong, MusicPattern, MusicStep } from '@/types/music';
 import { ALL_NOTES, findNote, TIANoteEntry } from '@/utils/atariNoteTable';
-import { exportSongToAsm, loadSong, saveSong } from '@/utils/atariMusicExporter';
+import { exportSongToAsm, exportSongToAsmNoEngine, loadSong, saveSong } from '@/utils/atariMusicExporter';
 import { useAtariMusicPlayer } from '@/utils/useAtariMusicPlayer';
 import { cn } from '@/lib/utils';
 
@@ -357,6 +357,7 @@ export default function AtariMusicEditor() {
     }, []);
 
     const handleExport = useCallback(() => exportSongToAsm(activeSong), [activeSong]);
+    const handleExportNoEngine = useCallback(() => exportSongToAsmNoEngine(activeSong), [activeSong]);
 
     // ── Get selected step info ──────────────────────────────────────────────
 
@@ -639,6 +640,7 @@ export default function AtariMusicEditor() {
                         onSave={handleSave}
                         onLoad={() => fileInputRef.current?.click()}
                         onExport={handleExport}
+                        onExportNoEngine={handleExportNoEngine}
                     />
                     <input
                         ref={fileInputRef}
@@ -885,6 +887,7 @@ interface BottomPanelProps {
     onSave: () => void;
     onLoad: () => void;
     onExport: () => void;
+    onExportNoEngine: () => void;
 }
 
 function BottomPanel({
@@ -899,6 +902,7 @@ function BottomPanel({
     onSave,
     onLoad,
     onExport,
+    onExportNoEngine,
 }: BottomPanelProps) {
     return (
         <div className="flex flex-col h-full px-3 py-2 gap-2">
@@ -941,6 +945,7 @@ function BottomPanel({
                 <DarkButton onClick={onLoad}>Load</DarkButton>
                 <DarkButton onClick={onSave}>Save</DarkButton>
                 <DarkButton onClick={onExport}>Export ASM</DarkButton>
+                <DarkButton onClick={onExportNoEngine}>Export ASM (No Engine)</DarkButton>
             </div>
 
             {/* Arrangement */}
