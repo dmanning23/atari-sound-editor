@@ -46,3 +46,5 @@ next-env.d.ts
 
 example_projects/SoundEffects/bin
 example_projects/Music/bin
+
+.claude/
